@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Exec {
+public class Driver {
 
 	public static void main(String[] args) {
 		Scanner obstacle = new Scanner(System.in);
