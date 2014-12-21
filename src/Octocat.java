@@ -17,6 +17,6 @@ public class Octocat extends Entity{
 	public void setLives(int n) {super.setLives(n);}
 	public void setSpeed(int n) {super.setSpeed(n);}
 	public void setDamage(int n) {super.setDamage(n);}
-	//No set type! You cannot change thy OctoCat
+	//No set type! You cannot change thy Octocat
 	
 }

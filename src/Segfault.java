@@ -17,6 +17,6 @@ public class Segfault extends Entity { //Segfaults are Octocat's ranged projecti
 	public void setLives(int n) {super.setLives(n);}
 	public void setSpeed(int n) {super.setSpeed(n);}
 	public void setDamage(int n) {super.setDamage(n);}
-	//No set type! You cannot change thy OctoCat
+	//No set type! You cannot change thy Segfault
 	
 }
