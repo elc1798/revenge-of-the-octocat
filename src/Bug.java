@@ -1,3 +1,5 @@
+import java.awt.image.BufferedImage;
+
 
 public class Bug extends Entity {
 
@@ -6,17 +8,19 @@ public class Bug extends Entity {
 		super.setLives(2);
 		super.setSpeed(1);
 		super.setDamage(1);
-		super.setType("BUG");
+		super.setType(4);
 	}
 	
 	public int getLives() {return super.getLives();}
 	public int getSpeed() {return super.getSpeed();}
 	public int getDamage() {return super.getDamage();}
-	public String getType() {return super.getType();}
+	public int getType() {return super.getType();}
+	public BufferedImage getSprite() {return super.getSprite();}
 	
 	public void setLives(int n) {super.setLives(n);}
 	public void setSpeed(int n) {super.setSpeed(n);}
 	public void setDamage(int n) {super.setDamage(n);}
-	//No set type! You cannot change thy Bug
+	public void setType(int n) {super.setType(n);}
+	public void setSprite(String s) {super.setSprite(s);}
 	
 }
