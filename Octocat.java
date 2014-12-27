@@ -22,7 +22,7 @@ public class Octocat extends Entity {
 		setDamage(1);
 		setSpeed(1);
 		setType("OCTOCAT_HEALTHY");
-		setSprite("OCTOCAT_HEALTH.jpg");
+		setSprite("OCTOCAT_HEALTHY.jpg");
 	}
 	
 	//Data retrievers
@@ -168,7 +168,7 @@ public class Octocat extends Entity {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, Animation.java line 89");
+				System.out.println("Interruption during Thread.sleep, Octocat.java Line 169");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
