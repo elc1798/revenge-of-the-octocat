@@ -1,4 +1,6 @@
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,6 +23,7 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 	public int[] spriteLocation = new int[2]; // [xcoor , ycoor]
 	
 	private final int DELAY = 24; //24 ms
+	private Thread animus; //Animation driver
 	
 	//Data retrievers
 	public int getLives() {
@@ -62,8 +65,24 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 		}
 	}
 	
+	public void drawObj(Graphics g) {
+		//Use keyword 'this' to clarify variables of class Entity, not of subclasses
+		g.drawImage(this.sprite , this.spriteLocation[0] , this.spriteLocation[1] , this.spriteBounds[0] , this.spriteBounds[1] , null);
+		Toolkit.getDefaultToolkit().sync();
+	}
+	
 	private void move() {//Movement alg
 		//TO BE DEFINED IN SUBCLASSES
+	}
+	
+	@Override
+	public void addNotify() {
+		super.addNotify();
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 	}
 	
 	@Override
@@ -74,35 +93,7 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
-		long prevTime , timeDiff , sleepTime;
-		
-		prevTime = System.currentTimeMillis();
-		
-		while (true) {
-			
-			move();
-			repaint();
-			
-			timeDiff = System.currentTimeMillis() - prevTime;
-			sleepTime = DELAY - timeDiff;
-			
-			if (sleepTime < 0) {
-				sleepTime = 2; // Do not allow negative sleepTime
-			}
-			
-			try {
-				Thread.sleep(sleepTime);
-			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep");
-				System.out.println("Sending SIGTERM to process...");
-				System.exit(0);
-			}
-			
-			prevTime = System.currentTimeMillis();
-			
-		}
+		//TO BE DEFINED IN SUBCLASSES
+		//Incorporates move
 	}
-
 }
