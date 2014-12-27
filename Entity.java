@@ -95,7 +95,7 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, Animation.java line 89");
+				System.out.println("Interruption during Thread.sleep");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
