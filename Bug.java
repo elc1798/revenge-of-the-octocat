@@ -1,25 +1,39 @@
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
+import java.util.Random;
 
-public class Octocat extends Entity {
+
+public class Bug extends Entity {
 	private int deltaX = 0;
 	private int deltaY = 0;
-	private final int STOP = 0;
 	
 	private Controller instance = null;
+	private Octocat target = null;
+	
+	private Random locationSetter = new Random();
 	
 	//Constructor!
 	
-	public Octocat(Controller ctrl) {
+	public Bug(Controller ctrl , Octocat prey) {
 		instance = ctrl;
-		setLives(3);
+		target = prey;
+		setLives(1);
 		setDamage(1);
-		setSpeed(2);
+		setSpeed(1);
 		setType("OCTOCAT_HEALTHY");
 		setSprite("resources/OCTOCAT_HEALTHY.jpg");
-		super.spriteBounds = new int[]{50 , 50};
-		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
+		super.spriteBounds = new int[]{70 , 70};
+		int init_X = target.spriteLocation[0];
+		int init_Y = target.spriteLocation[1];
+		while (Math.abs(init_X - target.spriteLocation[0]) < 50) { // Do not allow spawn within 50 units of player! (Cheap way!)
+			init_X = locationSetter.nextInt(instance.MAX_X); //Note we do not need to add instance.MIN_X because it's 0!
+		}
+		while (Math.abs(init_Y - target.spriteLocation[1]) < 50) {
+			init_Y = locationSetter.nextInt(instance.MAX_Y);
+		}
+		//TODO: Revise the init_LOC setters to be more efficient. Loops are definitely NOT required here.
+		
+		super.spriteLocation = new int[]{init_X , init_Y};
 	}
 
 	//Data retrievers
@@ -60,6 +74,20 @@ public class Octocat extends Entity {
 	}
 	
 	public void move() {//Movement alg
+		
+		//Chase after the octocat!
+		
+		if (super.spriteLocation[0] > target.spriteLocation[0]) {
+			deltaX = -1;
+		} else {
+			deltaX = 1;
+		}
+		if (super.spriteLocation[1] > target.spriteLocation[1]) {
+			deltaY = -1;
+		} else {
+			deltaY = 1;
+		}
+		
 		super.spriteLocation[0] += deltaX * getSpeed();
 		super.spriteLocation[1] += deltaY * getSpeed();
 		
@@ -78,50 +106,8 @@ public class Octocat extends Entity {
 		}
 	}
 	
-	public void keyPressed(KeyEvent e) {
-		int id = e.getKeyCode();
-		
-		switch (id) {
-		
-		case KeyEvent.VK_LEFT:
-			deltaX = -1;
-			break;
-		case KeyEvent.VK_RIGHT:
-			deltaX = 1;
-			break;
-		case KeyEvent.VK_UP:
-			deltaY = -1;
-			break;
-		case KeyEvent.VK_DOWN:
-			deltaY = 1;
-			break;
-		}
-		
-	}
-	
-	public void keyReleased(KeyEvent e) {
-		int id = e.getKeyCode();
-		
-		switch (id) {
-		
-		case KeyEvent.VK_LEFT:
-			deltaX = STOP;
-			break;
-		case KeyEvent.VK_RIGHT:
-			deltaX = STOP;
-			break;
-		case KeyEvent.VK_UP:
-			deltaY = STOP;
-			break;
-		case KeyEvent.VK_DOWN:
-			deltaY = STOP;
-			break;
-		}
-	}
-	
 	public void paintComponent(Graphics g) {
 		drawObj(g);
 	}
-	
 	
 }

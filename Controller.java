@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -15,6 +16,7 @@ public class Controller extends JFrame {
 	private Octocat player;
 	private BackGroundLoader bgl;
 	private GfxRenderer gfx;
+	private ArrayList<Bug> enemies = new ArrayList<Bug>();
 	
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
@@ -29,7 +31,7 @@ public class Controller extends JFrame {
 	public Controller() {
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
-		gfx = new GfxRenderer(player , bgl);
+		gfx = new GfxRenderer(player , bgl , enemies);
 		
 		setPreferredSize(new Dimension(950 , 600));
 		

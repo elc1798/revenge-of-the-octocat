@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -10,13 +11,15 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	
 	private Octocat OC;
 	private BackGroundLoader bgl;
+	private ArrayList<Bug> enemies = new ArrayList<Bug>();
 	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	
-	public GfxRenderer(Octocat session , BackGroundLoader b) {
+	public GfxRenderer(Octocat session , BackGroundLoader b , ArrayList<Bug> bugs) {
 		OC = session;
 		bgl = b;
+		enemies = bugs;
 	}
 
 	@Override
@@ -32,6 +35,9 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		super.paintComponent(g);
 		bgl.paintComponent(g);
 		OC.paintComponent(g);
+		for (Bug b : enemies) {
+			b.paintComponent(g);
+		}
 	}
 	
 	@Override
@@ -49,6 +55,9 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		while (true) {
 			
 			OC.move();
+			for (Bug b : enemies) {
+				b.move();
+			}
 			repaint();
 			
 			timeDiff = System.currentTimeMillis() - prevTime;
@@ -61,7 +70,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, Octocat.java Line 169");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 62");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
