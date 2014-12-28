@@ -35,13 +35,11 @@ public class Controller extends JFrame {
 	public Controller() {
 		
 		stock = 3;
-		//For testing purposes :)
-		stock = Integer.MAX_VALUE;
 		
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
 		for (int i = 0 ; i < level * 3; i++) {
-			//enemies.add(new Bug(this , player));
+			enemies.add(new Bug(this , player));
 		}
 		gfx = new GfxRenderer(player , bgl , enemies , projectiles);
 		

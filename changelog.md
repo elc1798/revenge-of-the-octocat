@@ -2,46 +2,64 @@
 
 ## Before 21/12/14
 
-	Ethan Cheng: Pushed some starter code
-	Jesse Elliott: Said hi to the repository page
+### Ethan Cheng
+
+Pushed some starter code
+
+### Jesse Elliott
+
+Said hi to the repository page
 
 ## 21/12/14
 
-	Jesse Elliott: changelog initiated
+### Jesse Elliott
+
+Changelog initiated
 
 ## 25/12/14
 
-	Ethan Cheng: Said Merry Christmas to the repo, gave it the present of backgrounds! Yay art!
+### Ethan Cheng
+
+Said Merry Christmas to the repo, gave it the present of backgrounds! Yay art!
 
 ## 27/12/14
 
-	Ethan Cheng: Restarted, overhauled old starter code, recreated the following files (in order, over a period of an hour and a half of straight coding):
+### Ethan Cheng:
 
-		- BackGroundLoader.java
+Restarted, overhauled old starter code, recreated the following files (in order, over a period of an hour and a half of straight coding):
 
-			Container for GfxRenderer, containing the background of the JFrame
+	- BackGroundLoader.java
 
-		- Entity.java
+		Container for GfxRenderer, containing the background of the JFrame
 
-			Superclass for all mobs, i.e. the Octocat , bugs , and segfaults
+	- Entity.java
 
-		- Octocat.java
+		Superclass for all mobs, i.e. the Octocat , bugs , and segfaults
 
-			Octocat, containing sprites, movement algorithms (key listeners)
+	- Octocat.java
 
-		- Controller.java
+		Octocat, containing sprites, movement algorithms (key listeners)
 
-			Wrapper for Octocat and BackGroundLoader <-- Overhauled
-			--> NEW --> Wrapper for GfxRenderer, controls the objects and storyline
+	- Controller.java
 
-		- Game.java
+		Wrapper for Octocat and BackGroundLoader <-- Overhauled
+		--> NEW --> Wrapper for GfxRenderer, controls the objects and storyline
 
-			Session of one Controller
+	- Game.java
 
-		- GfxRenderer.java
+		Session of one Controller
 
-			Handler for all background and sprite, in essense the entire JPanel
+	- GfxRenderer.java
 
-		- Bug.java
+		Handler for all background and sprite, in essense the entire JPanel
 
-			Bug, contains sprites, movement algorithms (stalk the Octocat)
+	- Bug.java
+
+		Bug, contains sprites, movement algorithms (stalk the Octocat)
+
+## 28/12/14
+
+### Ethan Cheng
+
+Created Segfault (projectiles) and necessary methods and handlers in other files
+Debugged movement values, added 'facing direction' variable in Octocat.java, values defined in Segfault.java constructor (int dir)
