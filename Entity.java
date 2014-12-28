@@ -19,8 +19,8 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 	private Image sprite;
 	private ImageIcon loader = null;
 	
-	public int[] spriteBounds = new int[2];
-	public int[] spriteLocation = new int[2]; // [xcoor , ycoor]
+	public int[] spriteBounds;
+	public int[] spriteLocation; // [xcoor , ycoor]
 	
 	private final int DELAY = 24; //24 ms
 	private Thread animus; //Animation driver
@@ -60,7 +60,7 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 			sprite = loader.getImage();
 			loader = null; //Reset for next setSprite
 		} else {
-			System.out.println("Error: File " + PIC + "not found. Exitting...");
+			System.out.println("Error: File " + PIC + " not found. Exitting...");
 			System.exit(0);
 		}
 	}

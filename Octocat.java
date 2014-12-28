@@ -22,7 +22,9 @@ public class Octocat extends Entity {
 		setDamage(1);
 		setSpeed(1);
 		setType("OCTOCAT_HEALTHY");
-		setSprite("OCTOCAT_HEALTHY.jpg");
+		setSprite("resources/OCTOCAT_HEALTHY.jpg");
+		super.spriteBounds = new int[]{50 , 50};
+		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
 	}
 	
 	//Data retrievers
@@ -69,8 +71,10 @@ public class Octocat extends Entity {
 		} else if (deltaY == -1) { //Crouch?
 			
 		} else {
-			System.out.println("Invalid value for deltaY has been set. Exitting...");
-			System.exit(0);
+			if (deltaY != 0) {
+				System.out.println("Invalid value for deltaY has been set. Exitting...");
+				System.exit(0);
+			}
 		}
 		//Location Correction: Do not let out of bounds of JFrame 'Controller -> instance'
 		if (super.spriteLocation[0] > instance.MAX_X) {
