@@ -18,6 +18,8 @@ public class Controller extends JFrame {
 	private GfxRenderer gfx;
 	private ArrayList<Bug> enemies = new ArrayList<Bug>();
 	
+	private int level = 1;
+	
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
 			player.keyReleased(e);
@@ -31,6 +33,9 @@ public class Controller extends JFrame {
 	public Controller() {
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
+		for (int i = 0 ; i < level * 3; i++) {
+			enemies.add(new Bug(this , player));
+		}
 		gfx = new GfxRenderer(player , bgl , enemies);
 		
 		setPreferredSize(new Dimension(950 , 600));
