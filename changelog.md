@@ -1,15 +1,20 @@
-<Before 21/12/14>
+# Changelog for Revenge of the Octocat
+
+## Before 21/12/14
+
 	Ethan Cheng: Pushed some starter code
 	Jesse Elliott: Said hi to the repository page
 
-<21/12/14>
+## 21/12/14
+
 	Jesse Elliott: changelog initiated
 
-<25/12/14>
+## 25/12/14
 
 	Ethan Cheng: Said Merry Christmas to the repo, gave it the present of backgrounds! Yay art!
 
-<27/12/14>
+## 27/12/14
+
 	Ethan Cheng: Restarted, overhauled old starter code, recreated the following files (in order, over a period of an hour and a half of straight coding):
 
 		- BackGroundLoader.java
