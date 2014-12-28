@@ -27,11 +27,10 @@ public class Controller extends JFrame {
 	
 	public Controller() {
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
-		player = new Octocat(this);
+		player = new Octocat(this , bgl);
 		
 		setPreferredSize(new Dimension(950 , 600));
 		
-		add(bgl);
 		add(player);
 		addKeyListener(new inputAdapter());
 		pack();

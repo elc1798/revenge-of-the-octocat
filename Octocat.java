@@ -13,11 +13,13 @@ public class Octocat extends Entity {
 	private final int DELAY = 24; //24 ms
 	private Thread animus; //Animation driver
 	private Controller instance = null;
+	private BackGroundLoader bkgrnd;
 	
 	//Constructor!
 	
-	public Octocat(Controller ctrl) {
+	public Octocat(Controller ctrl , BackGroundLoader BGL) {
 		instance = ctrl;
+		bkgrnd = BGL;
 		setLives(3);
 		setDamage(1);
 		setSpeed(1);
@@ -25,8 +27,10 @@ public class Octocat extends Entity {
 		setSprite("resources/OCTOCAT_HEALTHY.jpg");
 		super.spriteBounds = new int[]{50 , 50};
 		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
+		
+		setDoubleBuffered(true);
 	}
-	
+
 	//Data retrievers
 	public int getLives() {
 		return super.getLives();
@@ -66,25 +70,17 @@ public class Octocat extends Entity {
 	
 	private void move() {//Movement alg
 		super.spriteLocation[0] += deltaX * getSpeed();
-		if (deltaY == 1) { //Init jump sequence
-			
-		} else if (deltaY == -1) { //Crouch?
-			
-		} else {
-			if (deltaY != 0) {
-				System.out.println("Invalid value for deltaY has been set. Exitting...");
-				System.exit(0);
-			}
-		}
+		super.spriteLocation[1] += deltaY * getSpeed();
+		
 		//Location Correction: Do not let out of bounds of JFrame 'Controller -> instance'
-		if (super.spriteLocation[0] > instance.MAX_X) {
-			super.spriteLocation[0] = instance.MAX_X;
+		if (super.spriteLocation[0] > instance.MAX_X - super.spriteBounds[0]) {
+			super.spriteLocation[0] = instance.MAX_X - super.spriteBounds[0];
 		}
 		if (super.spriteLocation[0] < instance.MIN_X) {
 			super.spriteLocation[0] = instance.MIN_X;
 		}
-		if (super.spriteLocation[1] > instance.MAX_Y) {
-			super.spriteLocation[1] = instance.MAX_Y;
+		if (super.spriteLocation[1] > instance.MAX_Y - super.spriteBounds[1]) {
+			super.spriteLocation[1] = instance.MAX_Y - super.spriteBounds[1];
 		}
 		if (super.spriteLocation[1] < instance.MIN_Y) {
 			super.spriteLocation[1] = instance.MIN_Y;
@@ -142,6 +138,7 @@ public class Octocat extends Entity {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		bkgrnd.paintComponent(g);
 		drawObj(g);
 	}
 	
