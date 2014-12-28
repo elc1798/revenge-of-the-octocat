@@ -6,6 +6,7 @@ public class Octocat extends Entity {
 	private int deltaX = 0;
 	private int deltaY = 0;
 	private final int STOP = 0;
+	private int facing = 0;
 	
 	private Controller instance = null;
 	
@@ -20,6 +21,7 @@ public class Octocat extends Entity {
 		setSprite("resources/OCTOCAT_HEALTHY.jpg");
 		super.spriteBounds = new int[]{50 , 50};
 		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
+		facing = 0;
 	}
 
 	//Data retrievers
@@ -83,17 +85,99 @@ public class Octocat extends Entity {
 		
 		switch (id) {
 		
+		//Note deltaX and deltaY are hard coded to be -1 , 0 , 1 only
+		//Values for facing are taken from Segfault.java
+		
 		case KeyEvent.VK_LEFT:
 			deltaX = -1;
+			switch (deltaY) {
+			case -1:
+				facing = 7;
+				System.out.println("Octocat: Update position: Should be facing LEFT UP");
+				break;
+			case 0:
+				facing = 1;
+				System.out.println("Octocat: Update position: Should be facing LEFT");
+				break;
+			case 1:
+				facing = 5;
+				System.out.println("Octocat: Update position: Should be facing LEFT DOWN");
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
 			deltaX = 1;
+			switch (deltaY) {
+			case -1:
+				facing = 6;
+				System.out.println("Octocat: Update position: Should be facing RIGHT UP");
+				break;
+			case 0:
+				facing = 0;
+				System.out.println("Octocat: Update position: Should be facing RIGHT");
+				break;
+			case 1:
+				facing = 4;
+				System.out.println("Octocat: Update position: Should be facing RIGHT DOWN");
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		case KeyEvent.VK_UP:
 			deltaY = -1;
+			switch (deltaX) {
+			case -1:
+				facing = 7;
+				System.out.println("Octocat: Update position: Should be facing LEFT UP");
+				break;
+			case 0:
+				facing = 3;
+				System.out.println("Octocat: Update position: Should be facing UP");
+				break;
+			case 1:
+				facing = 6;
+				System.out.println("Octocat: Update position: Should be facing RIGHT UP");
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		case KeyEvent.VK_DOWN:
 			deltaY = 1;
+			switch (deltaX) {
+			case -1:
+				facing = 5;
+				System.out.println("Octocat: Update position: Should be facing LEFT DOWN");
+				break;
+			case 0:
+				facing = 2;
+				System.out.println("Octocat: Update position: Should be facing DOWN");
+				break;
+			case 1:
+				facing = 4;
+				System.out.println("Octocat: Update position: Should be facing RIGHT DOWN");
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
+			break;
+		case KeyEvent.VK_Z:
+			instance.shoot(facing);
 			break;
 		}
 		
@@ -106,15 +190,79 @@ public class Octocat extends Entity {
 		
 		case KeyEvent.VK_LEFT:
 			deltaX = STOP;
+			switch (deltaY) {
+			case -1:
+				facing = 3;
+				break;
+			case 0:
+				//Do not change. Octocat is stationary, do not change face direction
+				break;
+			case 1:
+				facing = 2;
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
 			deltaX = STOP;
+			switch (deltaY) {
+			case -1:
+				facing = 3;
+				break;
+			case 0:
+				//Do not change. Octocat is stationary, do not change face direction
+				break;
+			case 1:
+				facing = 2;
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		case KeyEvent.VK_UP:
 			deltaY = STOP;
+			switch (deltaX) {
+			case -1:
+				facing = 1;
+				break;
+			case 0:
+				//Do not change. Octocat is stationary, do not change face direction
+				break;
+			case 1:
+				facing = 0;
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		case KeyEvent.VK_DOWN:
 			deltaY = STOP;
+			switch (deltaX) {
+			case -1:
+				facing = 1;
+				break;
+			case 0:
+				//Do not change. Octocat is stationary, do not change face direction
+				break;
+			case 1:
+				facing = 0;
+				break;
+			default:
+				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
+				System.out.println("Sending SIGTERM to process 'this'");
+				System.exit(0);
+				break;
+			}
 			break;
 		}
 	}

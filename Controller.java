@@ -17,8 +17,10 @@ public class Controller extends JFrame {
 	private BackGroundLoader bgl;
 	private GfxRenderer gfx;
 	private ArrayList<Bug> enemies = new ArrayList<Bug>();
+	private Segfault[] projectiles = new Segfault[5];
 	
 	private int level = 1;
+	private int stock = 0;
 	
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
@@ -31,12 +33,17 @@ public class Controller extends JFrame {
 	}
 	
 	public Controller() {
+		
+		stock = 3;
+		//For testing purposes :)
+		stock = Integer.MAX_VALUE;
+		
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
 		for (int i = 0 ; i < level * 3; i++) {
-			enemies.add(new Bug(this , player));
+			//enemies.add(new Bug(this , player));
 		}
-		gfx = new GfxRenderer(player , bgl , enemies);
+		gfx = new GfxRenderer(player , bgl , enemies , projectiles);
 		
 		setPreferredSize(new Dimension(950 , 600));
 		
@@ -48,6 +55,42 @@ public class Controller extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+	}
+	
+	public int getStock() {
+		return stock;
+	}
+	
+	public void addAmmo() {
+		if (stock < 5) {
+			stock++;
+		}
+		// Fail safe correction:
+
+		if (stock > 5) {
+			stock = 5;
+		}
+		
+		System.out.println("Ammo stock: " + stock + " / 5");
+	}
+	
+	public void shoot(int dir) {
+		
+		// Fail safe correction:
+		
+		if (stock > 5) {
+			stock = 5;
+		}
+		if (stock > 0) {
+			projectiles[stock - 1] = new Segfault(this , player , dir , stock - 1);
+			stock--;
+		}
+		System.out.println("Ammo stock: " + stock + " / 5");
+	}
+	
+	public void rmAmmo(int id) {
+		//id represents the index!!!!!
+		projectiles[id] = null;
 	}
 
 }
