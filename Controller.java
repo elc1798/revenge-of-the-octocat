@@ -14,6 +14,7 @@ public class Controller extends JFrame {
 	
 	private Octocat player;
 	private BackGroundLoader bgl;
+	private GfxRenderer gfx;
 	
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
@@ -27,11 +28,12 @@ public class Controller extends JFrame {
 	
 	public Controller() {
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
-		player = new Octocat(this , bgl);
+		player = new Octocat(this);
+		gfx = new GfxRenderer(player , bgl);
 		
 		setPreferredSize(new Dimension(950 , 600));
 		
-		add(player);
+		add(gfx);
 		addKeyListener(new inputAdapter());
 		pack();
 		

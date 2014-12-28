@@ -1,25 +1,18 @@
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-
-@SuppressWarnings("serial")
 public class Octocat extends Entity {
 	private int deltaX = 0;
 	private int deltaY = 0;
 	private final int STOP = 0;
 	
-	private final int DELAY = 24; //24 ms
-	private Thread animus; //Animation driver
 	private Controller instance = null;
-	private BackGroundLoader bkgrnd;
 	
 	//Constructor!
 	
-	public Octocat(Controller ctrl , BackGroundLoader BGL) {
+	public Octocat(Controller ctrl) {
 		instance = ctrl;
-		bkgrnd = BGL;
 		setLives(3);
 		setDamage(1);
 		setSpeed(1);
@@ -27,8 +20,6 @@ public class Octocat extends Entity {
 		setSprite("resources/OCTOCAT_HEALTHY.jpg");
 		super.spriteBounds = new int[]{50 , 50};
 		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
-		
-		setDoubleBuffered(true);
 	}
 
 	//Data retrievers
@@ -68,7 +59,7 @@ public class Octocat extends Entity {
 		super.drawObj(g);
 	}
 	
-	private void move() {//Movement alg
+	public void move() {//Movement alg
 		super.spriteLocation[0] += deltaX * getSpeed();
 		super.spriteLocation[1] += deltaY * getSpeed();
 		
@@ -128,56 +119,9 @@ public class Octocat extends Entity {
 		}
 	}
 	
-	@Override
-	public void addNotify() {
-		super.addNotify();	
-		animus = new Thread(this);
-		animus.start();
-	}
-	
-	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		bkgrnd.paintComponent(g);
 		drawObj(g);
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		// Unneeded?
-	}
-
-	@Override
-	public void run() {
-		long prevTime , timeDiff , sleepTime;
-		
-		prevTime = System.currentTimeMillis();
-		
-		while (true) {
-			
-			move();
-			repaint();
-			
-			timeDiff = System.currentTimeMillis() - prevTime;
-			sleepTime = DELAY - timeDiff;
-			
-			if (sleepTime < 0) {
-				sleepTime = 2; // Do not allow negative sleepTime
-			}
-			
-			try {
-				Thread.sleep(sleepTime);
-			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, Octocat.java Line 169");
-				System.out.println("Sending SIGTERM to process...");
-				System.exit(0);
-			}
-			
-			prevTime = System.currentTimeMillis();
-			
-		}
-		
-	}
 	
 }

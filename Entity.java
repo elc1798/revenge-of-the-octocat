@@ -1,16 +1,11 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
-
-@SuppressWarnings("serial")
-public class Entity extends JPanel implements Runnable , ActionListener {
+public class Entity {
 
 	private int lives;
 	private int damage;
@@ -21,9 +16,6 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 	
 	public int[] spriteBounds;
 	public int[] spriteLocation; // [xcoor , ycoor]
-	
-	private final int DELAY = 24; //24 ms
-	private Thread animus; //Animation driver
 	
 	//Data retrievers
 	public int getLives() {
@@ -71,29 +63,4 @@ public class Entity extends JPanel implements Runnable , ActionListener {
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
-	private void move() {//Movement alg
-		//TO BE DEFINED IN SUBCLASSES
-	}
-	
-	@Override
-	public void addNotify() {
-		super.addNotify();
-	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void run() {
-		//TO BE DEFINED IN SUBCLASSES
-		//Incorporates move
-	}
 }

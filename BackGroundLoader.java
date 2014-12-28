@@ -1,10 +1,8 @@
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 
 public class BackGroundLoader {
