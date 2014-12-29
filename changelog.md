@@ -63,3 +63,6 @@ Restarted, overhauled old starter code, recreated the following files (in order,
 
 Created Segfault (projectiles) and necessary methods and handlers in other files
 Debugged movement values, added 'facing direction' variable in Octocat.java, values defined in Segfault.java constructor (int dir)
+
+(Later on during the day)
+Added collision detection, unit collision + damaging, entity interactions
