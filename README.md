@@ -9,8 +9,11 @@ Movement will be controlled with the arrow keys and attacking will use the z and
 
 
 ###Checklist:
- - [ ] Basic setup (Window formating, image creation and management, etc.)
- - [ ] Character basics (Positioning, sprite, etc.)
- - [ ] controls (arrow keys and z/x, enemy random/ordered movement)
- - [ ] collision/attack detection (overlapping panels/sprites)
- - [ ] ammo system (probably simple at this point, but definitely an embelishment.)
+ - [X] Basic setup (Window formating, image creation and management, etc.)
+ - [X] Character basics (Positioning, sprite, etc.)
+ - [X] controls (arrow keys and z/x, enemy random/ordered movement)
+ - [X] collision/attack detection (overlapping panels/sprites)
+ - [X] ammo system (probably simple at this point, but definitely an embelishment.)
+ - [ ] Storyline
+ - [ ] Splash Screen
+ - [ ] Art!
