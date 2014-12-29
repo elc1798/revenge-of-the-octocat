@@ -1,7 +1,6 @@
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -16,7 +15,7 @@ public class Controller extends JFrame {
 	private Octocat player;
 	private BackGroundLoader bgl;
 	private GfxRenderer gfx;
-	private ArrayList<Bug> enemies = new ArrayList<Bug>();
+	private Bug[] enemies;
 	private Segfault[] projectiles = new Segfault[5];
 	
 	private int level = 1;
@@ -38,10 +37,11 @@ public class Controller extends JFrame {
 		
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
-		for (int i = 0 ; i < level * 3; i++) {
-			enemies.add(new Bug(this , player));
+		enemies = new Bug[level * 3];
+		for (int i = 0; i < enemies.length; i++) {
+			enemies[i] = new Bug(this , player , i);
 		}
-		gfx = new GfxRenderer(player , bgl , enemies , projectiles);
+		gfx = new GfxRenderer(player , bgl , enemies , projectiles , this);
 		
 		setPreferredSize(new Dimension(950 , 600));
 		
@@ -91,4 +91,13 @@ public class Controller extends JFrame {
 		projectiles[id] = null;
 	}
 
+	public void rmBug(int id) {
+		enemies[id] = null;
+	}
+	
+	public void gameOver() {
+		System.out.println("You lose! You suck :D");
+		System.exit(0);
+	}
+	
 }

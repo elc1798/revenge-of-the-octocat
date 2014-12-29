@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -11,17 +10,19 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	
 	private Octocat OC;
 	private BackGroundLoader bgl;
-	private ArrayList<Bug> enemies;
+	private Bug[] enemies;
 	private Segfault[] projectiles;
+	private Controller instance;
 	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	
-	public GfxRenderer(Octocat session , BackGroundLoader b , ArrayList<Bug> bugs , Segfault[] sfs) {
+	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
 		OC = session;
 		bgl = b;
 		enemies = bugs;
 		projectiles = sfs;
+		instance = _instance;
 	}
 
 	@Override
@@ -43,7 +44,9 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 		for (Bug b : enemies) {
-			b.paintComponent(g);
+			if (b != null) {
+				b.paintComponent(g);
+			}
 		}
 	}
 	
@@ -62,12 +65,30 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		while (true) {
 			
 			OC.move();
+			
+			//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
+			
 			for (Bug b : enemies) {
-				b.move();
+				if (b != null) {
+					b.move();
+					if (b.boundaries().intersects(OC.boundaries())) {
+						OC.setLives(OC.getLives() - b.getDamage());
+						instance.rmBug(b.id);
+					}
+				}
 			}
 			for (Segfault s : projectiles) {
 				if (s != null) {
 					s.move();
+					for (Bug b : enemies) {
+						if (b != null) {
+							if (b.boundaries().intersects(s.boundaries())) {
+								b.setLives(b.getLives() - s.getDamage());
+								instance.rmAmmo(s.id);
+								break;
+							}
+						}
+					}
 				}
 			}
 			repaint();

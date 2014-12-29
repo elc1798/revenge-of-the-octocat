@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
 
@@ -16,6 +17,7 @@ public class Entity {
 	
 	public int[] spriteBounds;
 	public int[] spriteLocation; // [xcoor , ycoor]
+	private Rectangle spriteRect;
 	
 	//Data retrievers
 	public int getLives() {
@@ -36,6 +38,10 @@ public class Entity {
 	//Data setters
 	public void setLives(int n) {
 		lives = n;
+		//System.out.println(type + ": " + lives);
+		if (lives <= 0) {
+			System.out.println(type + " died");
+		}
 	}
 	public void setDamage(int n) {
 		damage = n;
@@ -55,6 +61,11 @@ public class Entity {
 			System.out.println("Error: File " + PIC + " not found. Exitting...");
 			System.exit(0);
 		}
+	}
+	
+	public Rectangle boundaries() {
+		spriteRect = new Rectangle(spriteLocation[0] , spriteLocation[1] , spriteBounds[0] , spriteBounds[1]);
+		return spriteRect;
 	}
 	
 	public void drawObj(Graphics g) {

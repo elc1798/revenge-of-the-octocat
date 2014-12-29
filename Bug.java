@@ -10,17 +10,20 @@ public class Bug extends Entity {
 	private Controller instance = null;
 	private Octocat target = null;
 	
+	public int id = 0;
+	
 	private Random locationSetter = new Random();
 	
 	//Constructor!
 	
-	public Bug(Controller ctrl , Octocat prey) {
+	public Bug(Controller ctrl , Octocat prey , int _id) {
 		instance = ctrl;
 		target = prey;
+		id = _id;
 		setLives(1);
 		setDamage(1);
 		setSpeed(1);
-		setType("OCTOCAT_HEALTHY");
+		setType("BUG_HEALTHY");
 		setSprite("resources/OCTOCAT_HEALTHY.jpg");
 		super.spriteBounds = new int[]{70 , 70};
 		int init_X = target.spriteLocation[0];
@@ -55,6 +58,9 @@ public class Bug extends Entity {
 	//Data setters
 	public void setLives(int n) {
 		super.setLives(n);
+		if (this.getLives() <= 0) {
+			instance.rmBug(this.id);
+		}
 	}
 	public void setDamage(int n) {
 		super.setDamage(n);
@@ -104,6 +110,7 @@ public class Bug extends Entity {
 		if (super.spriteLocation[1] < instance.MIN_Y) {
 			super.spriteLocation[1] = instance.MIN_Y;
 		}
+		
 	}
 	
 	public void paintComponent(Graphics g) {

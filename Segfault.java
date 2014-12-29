@@ -5,7 +5,8 @@ import java.awt.Image;
 public class Segfault extends Entity {
 	private int deltaX = 0;
 	private int deltaY = 0;
-	private int id = 0;
+	
+	public int id = 0;
 	
 	private Controller instance = null;
 	private Octocat host = null;
@@ -19,7 +20,7 @@ public class Segfault extends Entity {
 		setDamage(1);
 		setSpeed(3);
 		id = _id;
-		setType("OCTOCAT_HEALTHY");
+		setType("SEGFAULT");
 		setSprite("resources/OCTOCAT_HEALTHY.jpg");
 		super.spriteBounds = new int[]{25 , 25};
 		super.spriteLocation = new int[]{host.spriteLocation[0] , host.spriteLocation[1]};

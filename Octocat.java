@@ -43,6 +43,9 @@ public class Octocat extends Entity {
 	//Data setters
 	public void setLives(int n) {
 		super.setLives(n);
+		if (this.getLives() <= 0) {
+			instance.gameOver();
+		}
 	}
 	public void setDamage(int n) {
 		super.setDamage(n);
@@ -93,15 +96,15 @@ public class Octocat extends Entity {
 			switch (deltaY) {
 			case -1:
 				facing = 7;
-				System.out.println("Octocat: Update position: Should be facing LEFT UP");
+				//System.out.println("Octocat: Update position: Should be facing LEFT UP");
 				break;
 			case 0:
 				facing = 1;
-				System.out.println("Octocat: Update position: Should be facing LEFT");
+				//System.out.println("Octocat: Update position: Should be facing LEFT");
 				break;
 			case 1:
 				facing = 5;
-				System.out.println("Octocat: Update position: Should be facing LEFT DOWN");
+				//System.out.println("Octocat: Update position: Should be facing LEFT DOWN");
 				break;
 			default:
 				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
@@ -115,15 +118,15 @@ public class Octocat extends Entity {
 			switch (deltaY) {
 			case -1:
 				facing = 6;
-				System.out.println("Octocat: Update position: Should be facing RIGHT UP");
+				//System.out.println("Octocat: Update position: Should be facing RIGHT UP");
 				break;
 			case 0:
 				facing = 0;
-				System.out.println("Octocat: Update position: Should be facing RIGHT");
+				//System.out.println("Octocat: Update position: Should be facing RIGHT");
 				break;
 			case 1:
 				facing = 4;
-				System.out.println("Octocat: Update position: Should be facing RIGHT DOWN");
+				//System.out.println("Octocat: Update position: Should be facing RIGHT DOWN");
 				break;
 			default:
 				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
@@ -137,15 +140,15 @@ public class Octocat extends Entity {
 			switch (deltaX) {
 			case -1:
 				facing = 7;
-				System.out.println("Octocat: Update position: Should be facing LEFT UP");
+				//System.out.println("Octocat: Update position: Should be facing LEFT UP");
 				break;
 			case 0:
 				facing = 3;
-				System.out.println("Octocat: Update position: Should be facing UP");
+				//System.out.println("Octocat: Update position: Should be facing UP");
 				break;
 			case 1:
 				facing = 6;
-				System.out.println("Octocat: Update position: Should be facing RIGHT UP");
+				//System.out.println("Octocat: Update position: Should be facing RIGHT UP");
 				break;
 			default:
 				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
@@ -159,15 +162,15 @@ public class Octocat extends Entity {
 			switch (deltaX) {
 			case -1:
 				facing = 5;
-				System.out.println("Octocat: Update position: Should be facing LEFT DOWN");
+				//System.out.println("Octocat: Update position: Should be facing LEFT DOWN");
 				break;
 			case 0:
 				facing = 2;
-				System.out.println("Octocat: Update position: Should be facing DOWN");
+				//System.out.println("Octocat: Update position: Should be facing DOWN");
 				break;
 			case 1:
 				facing = 4;
-				System.out.println("Octocat: Update position: Should be facing RIGHT DOWN");
+				//System.out.println("Octocat: Update position: Should be facing RIGHT DOWN");
 				break;
 			default:
 				System.out.println("Invalid values for delta values detected. Exitting to prevent glitches/hacks...");
