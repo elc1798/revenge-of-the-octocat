@@ -66,3 +66,9 @@ Debugged movement values, added 'facing direction' variable in Octocat.java, val
 
 (Later on during the day)
 Added collision detection, unit collision + damaging, entity interactions
+
+## 30/12/14
+
+### Ethan Cheng
+
+Finished (a baseline, granted) for the game over screen, started working on the victory screen

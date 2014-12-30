@@ -94,6 +94,9 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					if (b.boundaries().intersects(OC.boundaries())) {
 						OC.setLives(OC.getLives() - b.getDamage());
 						instance.rmBug(b.id);
+						if (instance.numBugs() <= 0) {
+							overlay.victoryScreen();
+						}
 					}
 				}
 			}

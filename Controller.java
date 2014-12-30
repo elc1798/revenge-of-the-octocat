@@ -21,6 +21,7 @@ public class Controller extends JFrame {
 	
 	private int level = 1;
 	private int stock = 0;
+	private int enemiesLeft = 0;
 	
 	public int score = 0;
 	
@@ -44,6 +45,7 @@ public class Controller extends JFrame {
 		for (int i = 0; i < enemies.length; i++) {
 			enemies[i] = new Bug(this , player , i);
 		}
+		enemiesLeft = enemies.length;
 		gfx = new GfxRenderer(player , bgl , enemies , projectiles , this);
 		
 		setPreferredSize(new Dimension(950 , 600));
@@ -56,6 +58,7 @@ public class Controller extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		
 	}
 	
 	public int getStock() {
@@ -97,6 +100,11 @@ public class Controller extends JFrame {
 	public void rmBug(int id) {
 		enemies[id] = null;
 		score += 100;
+		enemiesLeft--;
+	}
+	
+	public int numBugs() {
+		return enemiesLeft;
 	}
 	
 	public void gameOver() {
@@ -108,7 +116,11 @@ public class Controller extends JFrame {
 	public void nextLevel() {
 		//Reinvoke constructor?
 		level++;
-		//Stuff
+		enemies = null;
+		enemies = new Bug[level * 3];
+		for (int i = 0; i < enemies.length; i++) {
+			enemies[i] = new Bug(this , player , i);
+		}
 	}
 	
 	public void stopKeyListener() {
