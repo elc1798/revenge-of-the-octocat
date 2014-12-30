@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,9 +16,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private Bug[] enemies;
 	private Segfault[] projectiles;
 	private Controller instance;
+	private Overlay overlay;
 	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
+	private boolean alive = true;
 	
 	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
 		OC = session;
@@ -23,6 +28,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		enemies = bugs;
 		projectiles = sfs;
 		instance = _instance;
+		overlay = new Overlay(instance);
 	}
 
 	@Override
@@ -36,17 +42,31 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		bgl.paintComponent(g);
-		OC.paintComponent(g);
-		for (Segfault s : projectiles) {
-			if (s != null) {
-				s.paintComponent(g);
+		if (OC.getLives() <= 0) {
+			String msg = "Game over!";
+            Font small = new Font("Helvetica", Font.BOLD, 14);
+            FontMetrics metr = this.getFontMetrics(small);
+            setBackground(Color.DARK_GRAY);
+            g.setColor(Color.white);
+            g.setFont(small);
+            g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y / 2);
+            alive = false;
+            instance.stopKeyListener();
+		} else {
+			bgl.paintComponent(g);
+			OC.paintComponent(g);
+			for (Segfault s : projectiles) {
+				if (s != null) {
+					s.paintComponent(g);
+				}
 			}
-		}
-		for (Bug b : enemies) {
-			if (b != null) {
-				b.paintComponent(g);
+			for (Bug b : enemies) {
+				if (b != null) {
+					b.paintComponent(g);
+				}
 			}
+			
+			overlay.paintComponent(g);
 		}
 	}
 	
@@ -62,7 +82,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		
 		prevTime = System.currentTimeMillis();
 		
-		while (true) {
+		while (alive) {
 			
 			OC.move();
 			
@@ -103,7 +123,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 62");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 120");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}

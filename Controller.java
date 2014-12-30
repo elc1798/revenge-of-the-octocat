@@ -17,9 +17,12 @@ public class Controller extends JFrame {
 	private GfxRenderer gfx;
 	private Bug[] enemies;
 	private Segfault[] projectiles = new Segfault[5];
+	private inputAdapter userIn = new inputAdapter();
 	
 	private int level = 1;
 	private int stock = 0;
+	
+	public int score = 0;
 	
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
@@ -46,7 +49,7 @@ public class Controller extends JFrame {
 		setPreferredSize(new Dimension(950 , 600));
 		
 		add(gfx);
-		addKeyListener(new inputAdapter());
+		addKeyListener(userIn);
 		pack();
 		
 		setTitle("Revenge of the Octocat!");
@@ -93,21 +96,23 @@ public class Controller extends JFrame {
 
 	public void rmBug(int id) {
 		enemies[id] = null;
+		score += 100;
 	}
 	
 	public void gameOver() {
-		System.out.println("You lose! You suck :D");
+		//Graphics drawing handled in GfxRenderer
+		System.out.println("You lose!");
 		System.exit(0);
-	}
-	
-	public void victoryScreen() {
-		//Planned
 	}
 	
 	public void nextLevel() {
 		//Reinvoke constructor?
 		level++;
 		//Stuff
+	}
+	
+	public void stopKeyListener() {
+		removeKeyListener(userIn);
 	}
 	
 }

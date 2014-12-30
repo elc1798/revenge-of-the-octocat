@@ -44,7 +44,7 @@ public class Octocat extends Entity {
 	public void setLives(int n) {
 		super.setLives(n);
 		if (this.getLives() <= 0) {
-			instance.gameOver();
+			//Game over is handled by GfxRenderer because the method currently used requires the Graphics and draw modules
 		}
 	}
 	public void setDamage(int n) {
@@ -273,6 +273,5 @@ public class Octocat extends Entity {
 	public void paintComponent(Graphics g) {
 		drawObj(g);
 	}
-	
-	
+		
 }
