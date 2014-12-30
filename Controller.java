@@ -100,4 +100,14 @@ public class Controller extends JFrame {
 		System.exit(0);
 	}
 	
+	public void victoryScreen() {
+		//Planned
+	}
+	
+	public void nextLevel() {
+		//Reinvoke constructor?
+		level++;
+		//Stuff
+	}
+	
 }
