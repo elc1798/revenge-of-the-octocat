@@ -44,7 +44,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		super.paintComponent(g);
 		if (OC.getLives() <= 0) {
 			String msg = "Game over!";
-            Font small = new Font("Helvetica", Font.BOLD, 14);
+            Font small = new Font("Helvetica", Font.BOLD, 28);
             FontMetrics metr = this.getFontMetrics(small);
             setBackground(Color.DARK_GRAY);
             g.setColor(Color.white);

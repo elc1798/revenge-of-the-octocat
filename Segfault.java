@@ -28,43 +28,59 @@ public class Segfault extends Entity {
 		case 0:
 			deltaX = 1;
 			deltaY = 0;
-			System.out.println("Spawning segfault w/ DIR = RIGHT");
+			//System.out.println("Spawning segfault w/ DIR = RIGHT");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_RIGHT.png");
 			break;
 		case 1:
 			deltaX = -1;
 			deltaY = 0;
-			System.out.println("Spawning segfault w/ DIR = LEFT");
+			//System.out.println("Spawning segfault w/ DIR = LEFT");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_LEFT.png");
 			break;
 		case 2:
 			deltaX = 0;
 			deltaY = 1;
-			System.out.println("Spawning segfault w/ DIR = DOWN");
+			//System.out.println("Spawning segfault w/ DIR = DOWN");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_DOWN.png");
 			break;
 		case 3:
 			deltaX = 0;
 			deltaY = -1;
-			System.out.println("Spawning segfault w/ DIR = UP");
+			//System.out.println("Spawning segfault w/ DIR = UP");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_UP.png");
 			break;
 		//Add diagonal cases???? idek yo
 		case 4:
 			deltaX = 1;
 			deltaY = 1;
-			System.out.println("Spawning segfault w/ DIR = DOWN - RIGHT");
+			//System.out.println("Spawning segfault w/ DIR = DOWN - RIGHT");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_DOWN-RIGHT.png");
 			break;
 		case 5:
 			deltaX = -1;
 			deltaY = 1;
-			System.out.println("Spawning segfault w/ DIR = DOWN - LEFT");
+			//System.out.println("Spawning segfault w/ DIR = DOWN - LEFT");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_DOWN-LEFT.png");
 			break;
 		case 6:
 			deltaX = 1;
 			deltaY = -1;
-			System.out.println("Spawning segfault w/ DIR = UP - RIGHT");
+			//System.out.println("Spawning segfault w/ DIR = UP - RIGHT");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_UP-RIGHT.png");
 			break;
 		case 7:
 			deltaX = -1;
 			deltaY = -1;
-			System.out.println("Spawning segfault w/ DIR = UP - LEFT");
+			//System.out.println("Spawning segfault w/ DIR = UP - LEFT");
+			//Uncomment when picture is made:
+			//this.setSprite("resources/SEGFAULT_UP_LEFT.png");
 			break;
 		default:
 			System.out.println("Invalid case: Valid queries are ints from 0 - 7 inclusive");

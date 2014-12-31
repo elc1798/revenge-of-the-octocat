@@ -93,6 +93,8 @@ public class Octocat extends Entity {
 		
 		case KeyEvent.VK_LEFT:
 			deltaX = -1;
+			//Uncomment when picture is made:
+			//this.setSprite("resources/OCTOCAT_LEFT.png");
 			switch (deltaY) {
 			case -1:
 				facing = 7;
@@ -114,6 +116,8 @@ public class Octocat extends Entity {
 			}
 			break;
 		case KeyEvent.VK_RIGHT:
+			//Uncomment when picture is made:
+			//this.setSprite("resources/OCTOCAT_RIGHT.png");
 			deltaX = 1;
 			switch (deltaY) {
 			case -1:
@@ -136,6 +140,8 @@ public class Octocat extends Entity {
 			}
 			break;
 		case KeyEvent.VK_UP:
+			//Uncomment when picture is made:
+			//this.setSprite("resources/OCTOCAT_UP.png");
 			deltaY = -1;
 			switch (deltaX) {
 			case -1:
@@ -158,6 +164,8 @@ public class Octocat extends Entity {
 			}
 			break;
 		case KeyEvent.VK_DOWN:
+			//Uncomment when picture is made:
+			//this.setSprite("resources/OCTOCAT_DOWN.png");
 			deltaY = 1;
 			switch (deltaX) {
 			case -1:

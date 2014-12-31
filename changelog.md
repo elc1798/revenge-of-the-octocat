@@ -72,3 +72,14 @@ Added collision detection, unit collision + damaging, entity interactions
 ### Ethan Cheng
 
 Finished (a baseline, granted) for the game over screen, started working on the victory screen
+
+
+## 31/12/14
+
+### Ethan Cheng
+
+Added directional-based sprite framework (Still no art!).
+***Notice: Planned: 
+A) Add sprites and art 
+B) Add music!
+C) Add class Upgrade that extends Entity that when picked up boosts some random value of Octocat 'player' i.e. speed, lives, damage, etc.
