@@ -41,7 +41,7 @@ public class Controller extends JFrame {
 		
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
-		enemies = new Bug[level * 3];
+		enemies = new Bug[3];
 		for (int i = 0; i < enemies.length; i++) {
 			enemies[i] = new Bug(this , player , i);
 		}
@@ -63,6 +63,10 @@ public class Controller extends JFrame {
 	
 	public int getStock() {
 		return stock;
+	}
+	
+	public int getLevel() {
+		return level;
 	}
 	
 	public void addAmmo() {
@@ -92,6 +96,18 @@ public class Controller extends JFrame {
 		System.out.println("Ammo stock: " + stock + " / 5");
 	}
 	
+	public void meleeAtk() {
+		/*
+		 * Octocat's melee attack!
+		 * Octocat lashes out in a 'circle' (Actually a rectangle) , dealing to *a single* enemy in the zone of attack
+		 */
+		
+		System.out.println("Melee Attack!");
+		
+		gfx.octocatMeleeAttackHandler();
+		
+	}
+	
 	public void rmAmmo(int id) {
 		//id represents the index!!!!!
 		projectiles[id] = null;
@@ -118,10 +134,16 @@ public class Controller extends JFrame {
 		//Reinvoke constructor?
 		level++;
 		enemies = null;
-		enemies = new Bug[level * 3];
+		enemies = new Bug[3 + level * 2];
+		enemiesLeft = enemies.length;
 		for (int i = 0; i < enemies.length; i++) {
 			enemies[i] = new Bug(this , player , i);
 		}
+		gfx.resetPointer(enemies);
+		//Be nice! Give ammo! You'll need it ;)
+		addAmmo();
+		addAmmo();
+		addAmmo();
 	}
 	
 	public void stopKeyListener() {

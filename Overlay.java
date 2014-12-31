@@ -38,7 +38,7 @@ public class Overlay { //Overlays are simply 'sprites' that appear on top of the
 	}
 	
 	public void victoryScreen() {
-		setSprite("resources/OVERLAY_VICTORY.png");
+		//setSprite("resources/OVERLAY_VICTORY.png");
 		instance.nextLevel();
 	}
 	

@@ -16,8 +16,8 @@ public class Segfault extends Entity {
 	public Segfault(Controller ctrl , Octocat player , int dir, int _id) {
 		instance = ctrl;
 		host = player;
-		setLives(9999999);
-		setDamage(1);
+		setLives(Integer.MAX_VALUE);//Indestructible?
+		setDamage(Integer.MAX_VALUE);//Indestructible?
 		setSpeed(3);
 		id = _id;
 		setType("SEGFAULT");

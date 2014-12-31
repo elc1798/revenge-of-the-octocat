@@ -190,6 +190,9 @@ public class Octocat extends Entity {
 		case KeyEvent.VK_Z:
 			instance.shoot(facing);
 			break;
+		case KeyEvent.VK_X:
+			instance.meleeAtk();
+			break;
 		}
 		
 	}

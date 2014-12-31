@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private Segfault[] projectiles;
 	private Controller instance;
 	private Overlay overlay;
+	private Rectangle currHitZone;
 	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
@@ -30,7 +32,27 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		instance = _instance;
 		overlay = new Overlay(instance);
 	}
+	
+	public void resetPointer(Bug[] bugPointer) {
+		enemies = bugPointer;
+	}
 
+	public void octocatMeleeAttackHandler() {
+		
+		currHitZone = new Rectangle(OC.spriteLocation[0] - 25 , OC.spriteLocation[1] - 25 , OC.spriteBounds[0] + 50 , OC.spriteBounds[1] + 50);
+		
+		for (Bug b : enemies) {
+			if (b != null) {
+				if (b.boundaries().intersects(currHitZone)) {
+					b.setLives(b.getLives() - OC.getDamage());
+					System.out.println(b.getLives());
+					currHitZone = null;
+					break;
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void addNotify() {
 		super.addNotify();
@@ -43,7 +65,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (OC.getLives() <= 0) {
-			String msg = "Game over!";
+			String msg = "Game over! Score: " + instance.score;
             Font small = new Font("Helvetica", Font.BOLD, 28);
             FontMetrics metr = this.getFontMetrics(small);
             setBackground(Color.DARK_GRAY);
@@ -92,21 +114,24 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			
 			//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
 			
+			Rectangle currOCBounds = OC.boundaries();
+			
 			for (Bug b : enemies) {
 				if (b != null) {
 					b.move();
-					if (b.boundaries().intersects(OC.boundaries())) {
+					if (b.boundaries().intersects(currOCBounds)) {
 						OC.setLives(OC.getLives() - b.getDamage());
-						instance.rmBug(b.id);
+						instance.rmBug(b.id); //It's either this or we can decrement b's lives by 1?
 					}
 				}
 			}
 			for (Segfault s : projectiles) {
 				if (s != null) {
 					s.move();
+					Rectangle currSFBounds = s.boundaries();	//Note: Entity.boundaries() creates a new Rectangle EVERY TIME it is called. To save runtime, create a variable instead of calling it over and over again
 					for (Bug b : enemies) {
 						if (b != null) {
-							if (b.boundaries().intersects(s.boundaries())) {
+							if (b.boundaries().intersects(currSFBounds)) {
 								b.setLives(b.getLives() - s.getDamage());
 								instance.rmAmmo(s.id);
 								break;
@@ -127,7 +152,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 120");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 136");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}

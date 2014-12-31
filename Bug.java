@@ -20,7 +20,7 @@ public class Bug extends Entity {
 		instance = ctrl;
 		target = prey;
 		id = _id;
-		setLives(1);
+		setLives(1 + (int)(instance.getLevel() / 2));
 		setDamage(1);
 		setSpeed(1);
 		setType("BUG_HEALTHY");
