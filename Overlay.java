@@ -38,8 +38,26 @@ public class Overlay { //Overlays are simply 'sprites' that appear on top of the
 	}
 	
 	public void victoryScreen() {
-		setSprite("resources/OVERLAY_VICTORY");
+		setSprite("resources/OVERLAY_VICTORY.png");
 		instance.nextLevel();
+	}
+	
+	public void addLifeScreen() {
+		setSprite("resources/OVERLAY_GITADD.png");
+		long timeStart = System.currentTimeMillis();
+		while (System.currentTimeMillis() - timeStart < 3000) {//Wait 3 seconds
+			//Just a filler :)
+		}
+		setSprite("resources/OVERLAY_BLANK.png");
+	}
+	
+	public void rmLifeScreen() {
+		setSprite("resources/OVERLAY_GITRM.png");
+		long timeStart = System.currentTimeMillis();
+		while (System.currentTimeMillis() - timeStart < 3000) {//Wait 3 seconds
+			//Just a filler :)
+		}
+		setSprite("resources/OVERLAY_BLANK.png");
 	}
 	
 	public Rectangle boundaries() {

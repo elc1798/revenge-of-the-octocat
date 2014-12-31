@@ -84,6 +84,10 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		
 		while (alive) {
 			
+			if (instance.numBugs() <= 0) {
+				overlay.victoryScreen();
+			}
+			
 			OC.move();
 			
 			//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
@@ -94,9 +98,6 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					if (b.boundaries().intersects(OC.boundaries())) {
 						OC.setLives(OC.getLives() - b.getDamage());
 						instance.rmBug(b.id);
-						if (instance.numBugs() <= 0) {
-							overlay.victoryScreen();
-						}
 					}
 				}
 			}

@@ -104,6 +104,7 @@ public class Controller extends JFrame {
 	}
 	
 	public int numBugs() {
+		//System.out.println(enemiesLeft);
 		return enemiesLeft;
 	}
 	
