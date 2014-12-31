@@ -18,7 +18,6 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private Segfault[] projectiles;
 	private Controller instance;
 	private Overlay overlay;
-	private Rectangle currHitZone;
 	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
@@ -35,22 +34,6 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	
 	public void resetPointer(Bug[] bugPointer) {
 		enemies = bugPointer;
-	}
-
-	public void octocatMeleeAttackHandler() {
-		
-		currHitZone = new Rectangle(OC.spriteLocation[0] - 25 , OC.spriteLocation[1] - 25 , OC.spriteBounds[0] + 50 , OC.spriteBounds[1] + 50);
-		
-		for (Bug b : enemies) {
-			if (b != null) {
-				if (b.boundaries().intersects(currHitZone)) {
-					b.setLives(b.getLives() - OC.getDamage());
-					System.out.println(b.getLives());
-					currHitZone = null;
-					break;
-				}
-			}
-		}
 	}
 	
 	@Override

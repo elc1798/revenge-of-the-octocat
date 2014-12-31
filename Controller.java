@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -22,6 +23,7 @@ public class Controller extends JFrame {
 	private int level = 1;
 	private int stock = 0;
 	private int enemiesLeft = 0;
+	private Rectangle currHitZone = null;
 	
 	public int score = 0;
 	
@@ -102,9 +104,18 @@ public class Controller extends JFrame {
 		 * Octocat lashes out in a 'circle' (Actually a rectangle) , dealing to *a single* enemy in the zone of attack
 		 */
 		
-		System.out.println("Melee Attack!");
+		currHitZone = new Rectangle(player.spriteLocation[0] - 25 , player.spriteLocation[1] - 25 , player.spriteBounds[0] + 50 , player.spriteBounds[1] + 50);
 		
-		gfx.octocatMeleeAttackHandler();
+		for (Bug b : enemies) {
+			if (b != null) {
+				if (b.boundaries().intersects(currHitZone)) {
+					b.setLives(b.getLives() - player.getDamage());
+					System.out.println(b.getLives());
+					currHitZone = null;
+					break;
+				}
+			}
+		}
 		
 	}
 	

@@ -79,7 +79,10 @@ Finished (a baseline, granted) for the game over screen, started working on the 
 ### Ethan Cheng
 
 Added directional-based sprite framework (Still no art!).
+
 ***Notice: Planned: 
 A) Add sprites and art 
 B) Add music!
 C) Add class Upgrade that extends Entity that when picked up boosts some random value of Octocat 'player' i.e. speed, lives, damage, etc.
+
+***An hour later: Added melee attacks!
