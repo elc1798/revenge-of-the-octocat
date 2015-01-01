@@ -110,7 +110,7 @@ public class Controller extends JFrame {
 			if (b != null) {
 				if (b.boundaries().intersects(currHitZone)) {
 					b.setLives(b.getLives() - player.getDamage());
-					System.out.println(b.getLives());
+					//System.out.println(b.getLives());
 					currHitZone = null;
 					break;
 				}
@@ -128,6 +128,7 @@ public class Controller extends JFrame {
 		enemies[id] = null;
 		score += 100;
 		enemiesLeft--;
+		gfx.powerups.add(new Powerup());
 	}
 	
 	public int numBugs() {

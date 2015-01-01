@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -18,6 +19,8 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private Segfault[] projectiles;
 	private Controller instance;
 	private Overlay overlay;
+	
+	public ArrayList<Powerup> powerups = new ArrayList<Powerup>(); //Made public so Controller can have access
 	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
@@ -34,6 +37,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	
 	public void resetPointer(Bug[] bugPointer) {
 		enemies = bugPointer;
+	}
+	
+	public void cleanupPowerups() {
+		powerups = null;
+		powerups = new ArrayList<Powerup>();
 	}
 	
 	@Override
@@ -70,7 +78,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					b.paintComponent(g);
 				}
 			}
-			
+			for (Powerup p : powerups) {
+				if (p != null) {
+					p.paintComponent(g);
+				}
+			}
 			overlay.paintComponent(g);
 		}
 	}
@@ -120,6 +132,14 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 								break;
 							}
 						}
+					}
+				}
+			}
+			for (Powerup p : powerups) {
+				if (p != null) {
+					if (p.boundaries().intersects(currOCBounds)) {
+						p.givePowerup(OC , instance);
+						p = null; //Use this rather than calling remove to save runtime. Cleanup later!
 					}
 				}
 			}
