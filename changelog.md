@@ -91,7 +91,10 @@ C) Add class Upgrade that extends Entity that when picked up boosts some random 
 
 !!!!!! HAPPY NEW YEAR !!!!!!
 
-###Jesse Elliott
+### Jesse Elliott
 
-started work on pico font.
+Started work on pico font for splash screen.
 
+### Ethan Cheng
+
+Added Powerup.java and necessary changes in Controller.java and GfxRenderer.java to accomodate Powerup.java
