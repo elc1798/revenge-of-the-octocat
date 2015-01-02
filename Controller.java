@@ -149,7 +149,7 @@ public class Controller extends JFrame {
 	}
 	
 	public void nextLevel() {
-		bgl.loadImage(bkgrndPrefix + bkgrndOrder[level]);
+		bgl.loadImage(bkgrndPrefix + bkgrndOrder[level % bkgrndOrder.length]);
 		level++;
 		enemies = null;
 		enemies = new Bug[3 + level * 2];
