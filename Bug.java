@@ -68,6 +68,7 @@ public class Bug extends Entity {
 				this.setSprite("resources/BUG_GHOST.png");
 				super.spriteBounds[0] = 107;
 				super.spriteBounds[1] = 20;
+				instance.spawnPowerup(this.id);
 			} else if (System.currentTimeMillis() - deathTime > 2500){
 				instance.rmBug(this.id);
 			}

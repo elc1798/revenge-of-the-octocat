@@ -129,12 +129,15 @@ public class Controller extends JFrame {
 	}
 
 	public void rmBug(int id) {
-		if (r.nextInt(100) < 25) {
-			gfx.powerups.add(new Powerup(enemies[id].spriteLocation));
-		}
 		enemies[id] = null;
 		score += 100;
 		enemiesLeft--;
+	}
+	
+	public void spawnPowerup(int id) {
+		if (r.nextInt(100) < 25) {
+			gfx.powerups.add(new Powerup(enemies[id].spriteLocation));
+		}
 	}
 	
 	public int numBugs() {
