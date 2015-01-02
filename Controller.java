@@ -26,6 +26,8 @@ public class Controller extends JFrame {
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
 	private Random r = new Random();
+	private String bkgrndPrefix = "resources/BKGRND_";
+	private String[] bkgrndOrder = new String[]{"ENTRY.jpg" , "ROOTS.jpg" , "MOBO.jpg" , "HUB.jpg" , "NET.jpg"};
 	
 	public int score = 0;
 	
@@ -147,7 +149,7 @@ public class Controller extends JFrame {
 	}
 	
 	public void nextLevel() {
-		//Reinvoke constructor?
+		bgl.loadImage(bkgrndPrefix + bkgrndOrder[level]);
 		level++;
 		enemies = null;
 		enemies = new Bug[3 + level * 2];

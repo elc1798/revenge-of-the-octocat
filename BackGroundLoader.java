@@ -14,10 +14,11 @@ public class BackGroundLoader {
 		loadImage(PIC);
 	}
 	
-	private void loadImage(String PIC) {
+	public void loadImage(String PIC) {
 		loader = new ImageIcon(PIC);
 		System.out.println("Found " + PIC + "? " + new File(PIC).exists() + "");
 		bkgrnd = loader.getImage();
+		loader = null;
 	}
 	
 	public void paintComponent(Graphics g) {//Background paint
