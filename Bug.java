@@ -61,7 +61,7 @@ public class Bug extends Entity {
 	public void setLives(int n) {
 		super.setLives(n);
 		if (this.getLives() <= 0) {
-			if (!dead && instance.numBugs() != 1) {
+			if (!dead && instance.numBugs() > 1) {
 				dead = true;
 				deathTime = System.currentTimeMillis();
 				this.setType("BUG_GHOST");
@@ -69,7 +69,8 @@ public class Bug extends Entity {
 				super.spriteBounds[0] = 107;
 				super.spriteBounds[1] = 20;
 				instance.spawnPowerup(this.id);
-			} else if (!dead && instance.numBugs() == 1) { // Do not create ghost if last bug
+			} else if (!dead && instance.numBugs() <= 1) { // Do not create ghost if last bug
+				this.setType("BUG_GHOST");
 				instance.spawnPowerup(this.id);
 				instance.rmBug(this.id);
 			} else if (System.currentTimeMillis() - deathTime > 2500){
