@@ -2,6 +2,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -24,6 +25,7 @@ public class Controller extends JFrame {
 	private int stock = 0;
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
+	private Random r = new Random();
 	
 	public int score = 0;
 	
@@ -125,10 +127,12 @@ public class Controller extends JFrame {
 	}
 
 	public void rmBug(int id) {
+		if (r.nextInt(100) < 25) {
+			gfx.powerups.add(new Powerup(enemies[id].spriteLocation));
+		}
 		enemies[id] = null;
 		score += 100;
 		enemiesLeft--;
-		gfx.powerups.add(new Powerup());
 	}
 	
 	public int numBugs() {

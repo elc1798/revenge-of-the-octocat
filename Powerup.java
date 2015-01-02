@@ -9,7 +9,7 @@ public class Powerup extends Entity {
 	
 	int choice = -1;
 	
-	public Powerup() {
+	public Powerup(int[] spriteLoc) {
 		Random r = new Random();
 		/*
 		 * 0 - 2	: Speed
@@ -18,6 +18,8 @@ public class Powerup extends Entity {
 		 * 11 - 13	: +1 Ammo
 		 */
 		choice = r.nextInt(14);
+		super.spriteLocation = spriteLoc;
+		super.spriteBounds = new int[]{30 , 30};
 		super.setLives(Integer.MAX_VALUE);
 		super.setDamage(Integer.MAX_VALUE);
 		super.setType("POWERUP");

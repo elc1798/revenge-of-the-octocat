@@ -135,11 +135,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					}
 				}
 			}
-			for (Powerup p : powerups) {
-				if (p != null) {
-					if (p.boundaries().intersects(currOCBounds)) {
-						p.givePowerup(OC , instance);
-						p = null; //Use this rather than calling remove to save runtime. Cleanup later!
+			for (int i = 0; i < powerups.size(); i++) {//I need the index, so use basic for loop instead of for(Powerup p : powerups)
+				if (powerups.get(i) != null) {
+					if (powerups.get(i).boundaries().intersects(currOCBounds)) {
+						powerups.get(i).givePowerup(OC , instance);
+						powerups.set(i , null); //Use this rather than calling remove to save runtime. Cleanup later!
 					}
 				}
 			}
@@ -155,7 +155,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 136");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 156");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
