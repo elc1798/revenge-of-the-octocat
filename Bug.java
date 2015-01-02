@@ -24,7 +24,7 @@ public class Bug extends Entity {
 		setDamage(1);
 		setSpeed(1);
 		setType("BUG_HEALTHY");
-		setSprite("resources/OCTOCAT_HEALTHY.jpg");
+		setSprite("resources/BUG_RIGHT.png");
 		super.spriteBounds = new int[]{70 , 70};
 		int init_X = target.spriteLocation[0];
 		int init_Y = target.spriteLocation[1];
@@ -85,12 +85,12 @@ public class Bug extends Entity {
 		
 		if (super.spriteLocation[0] > target.spriteLocation[0]) {
 			deltaX = -1;
-			//Uncomment this when picture is made:
-			//this.setSprite("resources/BUG_LEFT.png");
+			this.setSprite("resources/BUG_LEFT.png");
 		} else {
 			deltaX = 1;
-			//Uncomment this when picture is made:
-			//this.setSprite("resources/BUG_RIGHT.png");
+			if (super.spriteLocation[0] != target.spriteLocation[0]) {
+				this.setSprite("resources/BUG_RIGHT.png");
+			}
 		}
 		if (super.spriteLocation[1] > target.spriteLocation[1]) {
 			deltaY = -1;
