@@ -1,6 +1,52 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+
+class MeleeAtk {
+	private Image sprite;
+	private ImageIcon loader = null;
+	
+	public int[] spriteBounds;
+	public int[] spriteLocation; // [xcoor , ycoor]
+	private Rectangle spriteRect;
+	
+	public void setSprite(String PIC) {
+		if (new File(PIC).exists()) {
+			loader = new ImageIcon(PIC);
+			sprite = loader.getImage();
+			loader = null; //Reset for next setSprite
+		} else {
+			System.out.println("Error: File " + PIC + " not found. Exitting...");
+			System.exit(0);
+		}
+	}
+	
+	public Rectangle boundaries() {
+		spriteRect = new Rectangle(spriteLocation[0] , spriteLocation[1] , spriteBounds[0] , spriteBounds[1]);
+		return spriteRect;
+	}
+	
+	public void drawObj(Graphics g) {
+		g.drawImage(this.sprite , this.spriteLocation[0] , this.spriteLocation[1] , this.spriteBounds[0] , this.spriteBounds[1] , null);
+		Toolkit.getDefaultToolkit().sync();
+	}
+	
+	public MeleeAtk(Octocat parent) {
+		spriteLocation = new int[]{parent.spriteLocation[0] - 25 , parent.spriteLocation[1] - 25};
+		spriteBounds = new int[]{parent.spriteBounds[0] + 50 , parent.spriteBounds[1] + 50};
+		this.setSprite("resources/MELEEATK_OFF.png");
+	}
+	
+	public void update(Octocat parent) {
+		spriteLocation = new int[]{parent.spriteLocation[0] - 25 , parent.spriteLocation[1] - 25};
+		spriteBounds = new int[]{parent.spriteBounds[0] + 50 , parent.spriteBounds[1] + 50};
+	}
+}
 
 public class Octocat extends Entity {
 	private int deltaX = 0;
@@ -9,6 +55,9 @@ public class Octocat extends Entity {
 	private int facing = 0;
 	
 	private Controller instance = null;
+	private MeleeAtk attackRect = null;
+	private boolean attackRectSpriteNeedsReset = false;
+	private long attackRectSpriteChangeTime;
 	
 	//Constructor!
 	
@@ -19,9 +68,12 @@ public class Octocat extends Entity {
 		setSpeed(2);
 		setType("OCTOCAT_HEALTHY");
 		setSprite("resources/OCTOCAT_HEALTHY.png");
+		
 		super.spriteBounds = new int[]{50 , 50};
 		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
 		facing = 0;
+		
+		attackRect = new MeleeAtk(this);
 	}
 
 	//Data retrievers
@@ -70,6 +122,11 @@ public class Octocat extends Entity {
 	public void move() {//Movement alg
 		super.spriteLocation[0] += deltaX * getSpeed();
 		super.spriteLocation[1] += deltaY * getSpeed();
+		attackRect.update(this);
+		if (attackRectSpriteNeedsReset && System.currentTimeMillis() - attackRectSpriteChangeTime > 125) {
+			attackRect.setSprite("resources/MELEEATK_OFF.png");
+			attackRectSpriteNeedsReset = false;
+		}
 		
 		//Location Correction: Do not let out of bounds of JFrame 'Controller -> instance'
 		if (super.spriteLocation[0] > instance.MAX_X - super.spriteBounds[0]) {
@@ -195,6 +252,9 @@ public class Octocat extends Entity {
 			break;
 		case KeyEvent.VK_X:
 			instance.meleeAtk();
+			attackRect.setSprite("resources/MELEEATK_ON.png");
+			attackRectSpriteNeedsReset = true;
+			attackRectSpriteChangeTime = System.currentTimeMillis();
 			break;
 		}
 		
@@ -285,6 +345,7 @@ public class Octocat extends Entity {
 	}
 	
 	public void paintComponent(Graphics g) {
+		attackRect.drawObj(g);
 		drawObj(g);
 	}
 		
