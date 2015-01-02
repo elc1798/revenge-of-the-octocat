@@ -18,7 +18,7 @@ public class Octocat extends Entity {
 		setDamage(1);
 		setSpeed(2);
 		setType("OCTOCAT_HEALTHY");
-		setSprite("resources/OCTOCAT_HEALTHY.jpg");
+		setSprite("resources/OCTOCAT_HEALTHY.png");
 		super.spriteBounds = new int[]{50 , 50};
 		super.spriteLocation = new int[]{ctrl.MAX_X / 2 , ctrl.MAX_Y / 2};
 		facing = 0;

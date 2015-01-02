@@ -48,12 +48,20 @@ public class Overlay { //Overlays are simply 'sprites' that appear on top of the
 		setSprite("resources/OVERLAY_VICTORY.png");
 	}
 
-	public void addLifeScreen() {
-		//setSprite("resources/OVERLAY_GITADD.png");
+	public void addLifeScreen(int xcoor , int ycoor) {
+		spriteLocation[0] = xcoor;
+		spriteLocation[1] = ycoor;
+		spriteBounds[0] = 275;
+		spriteBounds[1] = 50;
+		setSprite("resources/OVERLAY_GITADD.png");
 	}
 
 	public void rmLifeScreen() {
-		//setSprite("resources/OVERLAY_GITRM.png");
+		spriteBounds[0] = 250;
+		spriteBounds[1] = 50;
+		spriteLocation[0] = 350;
+		spriteLocation[1] = 275;
+		setSprite("resources/OVERLAY_GITRM.png");
 	}
 	
 	public void resetOverlay() {

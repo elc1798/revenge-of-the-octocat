@@ -13,6 +13,8 @@ public class Bug extends Entity {
 	public int id = 0;
 	
 	private Random locationSetter = new Random();
+	private long deathTime;
+	private boolean dead = false;
 	
 	//Constructor!
 	
@@ -59,7 +61,16 @@ public class Bug extends Entity {
 	public void setLives(int n) {
 		super.setLives(n);
 		if (this.getLives() <= 0) {
-			instance.rmBug(this.id);
+			if (!dead) {
+				dead = true;
+				deathTime = System.currentTimeMillis();
+				this.setType("BUG_GHOST");
+				this.setSprite("resources/BUG_GHOST.png");
+				super.spriteBounds[0] = 107;
+				super.spriteBounds[1] = 20;
+			} else if (System.currentTimeMillis() - deathTime > 2500){
+				instance.rmBug(this.id);
+			}
 		}
 	}
 	public void setDamage(int n) {

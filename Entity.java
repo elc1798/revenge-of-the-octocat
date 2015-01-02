@@ -40,7 +40,7 @@ public class Entity {
 		lives = n;
 		//System.out.println(type + ": " + lives);
 		if (lives <= 0) {
-			System.out.println(type + " died");
+			//System.out.println(type + " died");
 		}
 	}
 	public void setDamage(int n) {

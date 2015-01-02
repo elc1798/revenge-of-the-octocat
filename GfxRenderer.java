@@ -129,7 +129,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			Rectangle currOCBounds = OC.boundaries();
 			
 			for (Bug b : enemies) {
-				if (b != null) {
+				if (b != null && !b.getType().equals("BUG_GHOST")) {
 					b.move();
 					if (b.boundaries().intersects(currOCBounds)) {
 						OC.setLives(OC.getLives() - b.getDamage());
@@ -138,6 +138,8 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						requireOverlayReset = true;
 						overlayChanged = System.currentTimeMillis();
 					}
+				} else if (b != null && b.getType().equals("BUG_GHOST")) {
+					b.setLives(-9001);
 				}
 			}
 			for (Segfault s : projectiles) {
@@ -145,7 +147,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					s.move();
 					Rectangle currSFBounds = s.boundaries();	//Note: Entity.boundaries() creates a new Rectangle EVERY TIME it is called. To save runtime, create a variable instead of calling it over and over again
 					for (Bug b : enemies) {
-						if (b != null) {
+						if (b != null && !b.getType().equals("BUG_GHOST")) {
 							if (b.boundaries().intersects(currSFBounds)) {
 								b.setLives(b.getLives() - s.getDamage());
 								instance.rmAmmo(s.id);
@@ -160,7 +162,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					if (powerups.get(i).boundaries().intersects(currOCBounds)) {
 						powerups.get(i).givePowerup(OC , instance);
 						if (powerups.get(i).getType().equals("POWERUP_LIFE")) {
-							overlay.addLifeScreen();
+							overlay.addLifeScreen(OC.spriteLocation[0] , OC.spriteLocation[1]);
 							requireOverlayReset = true;
 							overlayChanged = System.currentTimeMillis();
 						}
@@ -180,7 +182,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 181");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 183");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
