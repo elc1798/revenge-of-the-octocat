@@ -28,6 +28,7 @@ public class Powerup extends Entity {
 			super.setSprite("resources/POWERUP_SPEED.png");
 		} else if (3 <= choice && choice <= 7) {
 			super.setSprite("resources/POWERUP_LIFE.png");
+			super.setType("POWERUP_LIFE");
 		} else if (8 <= choice && choice <= 10) {
 			super.setSprite("resources/POWERUP_DAMAGE.png");
 		} else if (11 <= choice && choice <= 13) {

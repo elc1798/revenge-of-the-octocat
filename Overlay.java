@@ -28,9 +28,12 @@ public class Overlay { //Overlays are simply 'sprites' that appear on top of the
 	
 	public void setSprite(String PIC) {
 		if (new File(PIC).exists()) {
-			loader = new ImageIcon(PIC);
-			sprite = loader.getImage();
-			loader = null; //Reset for next setSprite
+			if (!(instance.numBugs() == 0 && !(PIC.equals("resources/OVERLAY_BLANK.png") || PIC.equals("resources/OVERLAY_VICTORY.png")))) {
+				//On victory screen, do not allow changing to things other than blank or victory
+				loader = new ImageIcon(PIC);
+				sprite = loader.getImage();
+				loader = null; //Reset for next setSprite
+			}
 		} else {
 			System.out.println("Error: File " + PIC + " not found. Exitting...");
 			System.exit(0);
@@ -38,26 +41,25 @@ public class Overlay { //Overlays are simply 'sprites' that appear on top of the
 	}
 	
 	public void victoryScreen() {
-		//setSprite("resources/OVERLAY_VICTORY.png");
-		instance.nextLevel();
+		spriteLocation[0] = 175;
+		spriteLocation[1] = 250;
+		spriteBounds[0] = 600;
+		spriteBounds[1] = 100;
+		setSprite("resources/OVERLAY_VICTORY.png");
 	}
-	
+
 	public void addLifeScreen() {
-		setSprite("resources/OVERLAY_GITADD.png");
-		long timeStart = System.currentTimeMillis();
-		while (System.currentTimeMillis() - timeStart < 3000) {//Wait 3 seconds
-			//Just a filler :)
-		}
-		setSprite("resources/OVERLAY_BLANK.png");
+		//setSprite("resources/OVERLAY_GITADD.png");
+	}
+
+	public void rmLifeScreen() {
+		//setSprite("resources/OVERLAY_GITRM.png");
 	}
 	
-	public void rmLifeScreen() {
-		setSprite("resources/OVERLAY_GITRM.png");
-		long timeStart = System.currentTimeMillis();
-		while (System.currentTimeMillis() - timeStart < 3000) {//Wait 3 seconds
-			//Just a filler :)
-		}
+	public void resetOverlay() {
 		setSprite("resources/OVERLAY_BLANK.png");
+		spriteBounds = new int[]{instance.MAX_X , instance.MAX_Y};
+		spriteLocation = new int[]{instance.MIN_X , instance.MIN_Y};
 	}
 	
 	public Rectangle boundaries() {

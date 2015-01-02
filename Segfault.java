@@ -71,7 +71,7 @@ public class Segfault extends Entity {
 			deltaX = -1;
 			deltaY = -1;
 			//System.out.println("Spawning segfault w/ DIR = UP - LEFT");
-			this.setSprite("resources/SEGFAULT_UP_LEFT.png");
+			this.setSprite("resources/SEGFAULT_UP-LEFT.png");
 			break;
 		default:
 			System.out.println("Invalid case: Valid queries are ints from 0 - 7 inclusive");

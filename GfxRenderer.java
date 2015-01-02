@@ -25,6 +25,9 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	private boolean alive = true;
+	public boolean requireOverlayReset = false;
+	public long overlayChanged = System.currentTimeMillis();
+	private boolean requireNextLevel = false;
 	
 	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
 		OC = session;
@@ -101,9 +104,23 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		
 		while (alive) {
 			
+			if (requireOverlayReset && System.currentTimeMillis() - overlayChanged > 3000) {
+					overlay.resetOverlay();
+					requireOverlayReset = false;
+					if (requireNextLevel) {
+						instance.nextLevel();
+						requireNextLevel = false;
+					}
+			}
+			
 			if (instance.numBugs() <= 0) {
 				overlay.victoryScreen();
-			}
+				if (!requireNextLevel) {
+					requireOverlayReset = true;
+					overlayChanged = System.currentTimeMillis();
+					requireNextLevel = true;
+				}
+			}			
 			
 			OC.move();
 			
@@ -117,6 +134,9 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					if (b.boundaries().intersects(currOCBounds)) {
 						OC.setLives(OC.getLives() - b.getDamage());
 						instance.rmBug(b.id); //It's either this or we can decrement b's lives by 1?
+						overlay.rmLifeScreen();
+						requireOverlayReset = true;
+						overlayChanged = System.currentTimeMillis();
 					}
 				}
 			}
@@ -139,6 +159,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				if (powerups.get(i) != null) {
 					if (powerups.get(i).boundaries().intersects(currOCBounds)) {
 						powerups.get(i).givePowerup(OC , instance);
+						if (powerups.get(i).getType().equals("POWERUP_LIFE")) {
+							overlay.addLifeScreen();
+							requireOverlayReset = true;
+							overlayChanged = System.currentTimeMillis();
+						}
 						powerups.set(i , null); //Use this rather than calling remove to save runtime. Cleanup later!
 					}
 				}
@@ -155,7 +180,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 156");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 181");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
