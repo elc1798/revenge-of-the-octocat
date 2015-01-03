@@ -131,7 +131,7 @@ public class Controller extends JFrame {
 	public void rmBug(int id) {
 		enemies[id] = null;
 		score += 100;
-		//enemiesLeft--;
+		//Used to call decrementEnemiesLeft() but removed so dynamic sprites for Bugs could work with Overlays and BUG_GHOSTs
 	}
 	
 	public void decrementEnemiesLeft() {

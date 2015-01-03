@@ -183,7 +183,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 183");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 184");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
