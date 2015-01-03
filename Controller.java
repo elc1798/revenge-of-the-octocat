@@ -131,6 +131,10 @@ public class Controller extends JFrame {
 	public void rmBug(int id) {
 		enemies[id] = null;
 		score += 100;
+		//enemiesLeft--;
+	}
+	
+	public void decrementEnemiesLeft() {
 		enemiesLeft--;
 	}
 	

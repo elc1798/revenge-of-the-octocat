@@ -68,9 +68,11 @@ public class Bug extends Entity {
 				this.setSprite("resources/BUG_GHOST.png");
 				super.spriteBounds[0] = 107;
 				super.spriteBounds[1] = 20;
+				instance.decrementEnemiesLeft();
 				instance.spawnPowerup(this.id);
 			} else if (!dead && instance.numBugs() <= 1) { // Do not create ghost if last bug
 				this.setType("BUG_GHOST");
+				instance.decrementEnemiesLeft();
 				instance.spawnPowerup(this.id);
 				instance.rmBug(this.id);
 			} else if (System.currentTimeMillis() - deathTime > 2500){

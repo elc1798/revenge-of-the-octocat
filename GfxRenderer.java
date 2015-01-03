@@ -133,7 +133,8 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					b.move();
 					if (b.boundaries().intersects(currOCBounds)) {
 						OC.setLives(OC.getLives() - b.getDamage());
-						instance.rmBug(b.id); //It's either this or we can decrement b's lives by 1?
+						instance.rmBug(b.id);
+						instance.decrementEnemiesLeft();
 						overlay.rmLifeScreen();
 						requireOverlayReset = true;
 						overlayChanged = System.currentTimeMillis();
