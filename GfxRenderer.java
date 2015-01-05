@@ -147,7 +147,18 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					for (Bug c : enemies){
 						if (b.id != c.id){
 							if (b.boundaries().intersects(c.boundaries())){
-								
+							    if (b.spriteLocation[0]-c.spriteLocation[0]>0){
+								b.spriteLocation[0]+=70-b.spriteLocation[0]+c.spriteLocation[0];
+							    }
+							    else{
+								b.spriteLocation[0]-=70-b.spriteLocation[0]+c.spriteLocation[0];
+							    }
+							    if (b.spriteLocation[1]-c.spriteLocation[1]>0){
+								b.spriteLocation[1]+=70-b.spriteLocation[1]+c.spriteLocation[1];
+							    }
+							    else{
+								b.spriteLocation[1]-=70-b.spriteLocation[1]+c.spriteLocation[1];
+							    }
 							}
 						}
 					}
