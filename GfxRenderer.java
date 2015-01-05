@@ -108,6 +108,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					overlay.resetOverlay();
 					requireOverlayReset = false;
 					if (requireNextLevel) {
+						for (Segfault s : projectiles) {
+							if (s != null) {
+								instance.rmAmmo(s.id);
+							}
+						}
 						instance.nextLevel();
 						requireNextLevel = false;
 					}
@@ -183,7 +188,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 184");
+				System.out.println("Interruption during Thread.sleep, GfxRenderer.java Line 189");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
