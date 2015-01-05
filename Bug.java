@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.util.Random;
 
 
@@ -137,6 +138,12 @@ public class Bug extends Entity {
 	
 	public void paintComponent(Graphics g) {
 		drawObj(g);
+	}
+	
+	public Rectangle moveBoundaries() {
+		Rectangle spriteRect = null;
+		spriteRect = new Rectangle(super.spriteLocation[0] - 5, super.spriteLocation[1] - 5, super.spriteBounds[0] + 10, spriteBounds[1] + 10);
+		return spriteRect;
 	}
 	
 }
