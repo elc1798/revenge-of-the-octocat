@@ -98,3 +98,10 @@ Started work on pico font for splash screen.
 ### Ethan Cheng
 
 Added Powerup.java and necessary changes in Controller.java and GfxRenderer.java to accomodate Powerup.java
+
+
+## 1/5/15
+
+### Jesse Elliott & Ethan Cheng
+
+Worked on bug overlap & projectiles
