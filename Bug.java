@@ -16,6 +16,7 @@ public class Bug extends Entity {
 	private Random locationSetter = new Random();
 	private long deathTime;
 	private boolean dead = false;
+	private Rectangle moveRect = null;
 	
 	//Constructor!
 	
@@ -141,9 +142,8 @@ public class Bug extends Entity {
 	}
 	
 	public Rectangle moveBoundaries() {
-		Rectangle spriteRect = null;
-		spriteRect = new Rectangle(super.spriteLocation[0] - 5, super.spriteLocation[1] - 5, super.spriteBounds[0] + 10, spriteBounds[1] + 10);
-		return spriteRect;
+		moveRect = new Rectangle(super.spriteLocation[0] - 5, super.spriteLocation[1] - 5, super.spriteBounds[0] + 10, spriteBounds[1] + 10);
+		return moveRect;
 	}
 	
 }

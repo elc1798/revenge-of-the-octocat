@@ -145,19 +145,19 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						overlayChanged = System.currentTimeMillis();
 					}
 					for (Bug c : enemies){
-						if (b != null && c != null && b.id != c.id){
-							if (b.boundaries().intersects(c.boundaries())){
-							    if (b.spriteLocation[0]-c.spriteLocation[0]>0){
-								b.spriteLocation[0]+=70-b.spriteLocation[0]+c.spriteLocation[0];
+						if (c != null && b.id != c.id){
+							if (b.moveBoundaries().intersects(c.moveBoundaries())){
+							    if (b.spriteLocation[0] - c.spriteLocation[0] > 0){
+							    	b.spriteLocation[0] += 2 - b.spriteLocation[0] + c.spriteLocation[0];
 							    }
 							    else{
-								b.spriteLocation[0]-=70-b.spriteLocation[0]+c.spriteLocation[0];
+							    	b.spriteLocation[0] -= 2 - b.spriteLocation[0] + c.spriteLocation[0];
 							    }
-							    if (b.spriteLocation[1]-c.spriteLocation[1]>0){
-								b.spriteLocation[1]+=70-b.spriteLocation[1]+c.spriteLocation[1];
+							    if (b.spriteLocation[1] - c.spriteLocation[1] > 0){
+							    	b.spriteLocation[1] += 2 - b.spriteLocation[1] + c.spriteLocation[1];
 							    }
 							    else{
-								b.spriteLocation[1]-=70-b.spriteLocation[1]+c.spriteLocation[1];
+							    	b.spriteLocation[1] -= 70- b.spriteLocation[1] + c.spriteLocation[1];
 							    }
 							}
 						}
