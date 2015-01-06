@@ -145,7 +145,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						overlayChanged = System.currentTimeMillis();
 					}
 					for (Bug c : enemies){
-						if (b.id != c.id){
+						if (b != null && c != null && b.id != c.id){
 							if (b.boundaries().intersects(c.boundaries())){
 							    if (b.spriteLocation[0]-c.spriteLocation[0]>0){
 								b.spriteLocation[0]+=70-b.spriteLocation[0]+c.spriteLocation[0];
