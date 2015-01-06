@@ -109,3 +109,9 @@ Worked on bug overlap & projectiles
 ### Jesse Elliott
 
 fixed up OctoCat Sprite Transparency
+
+## 1/6/15
+
+### Jesse Elliott & Ethan Cheng (In Class/Person)
+
+Worked on bug overlap spawn
