@@ -20,7 +20,7 @@ public class Bug extends Entity {
 	
 	//Constructor!
 	
-	public Bug(Controller ctrl , Octocat prey , int _id) {
+    public Bug(Controller ctrl , Octocat prey , int _id) {
 		instance = ctrl;
 		target = prey;
 		id = _id;
@@ -32,14 +32,27 @@ public class Bug extends Entity {
 		super.spriteBounds = new int[]{70 , 70};
 		int init_X = target.spriteLocation[0];
 		int init_Y = target.spriteLocation[1];
+		for (int i = 0; i < 3 + 2 * instance.getLevel() - 1; i++){
+		    if (instance.getBug(i) != null){
+			int tries = 0;
+			while (tries < 5 && Math.abs(init_X - instance.getBug(i).spriteLocation[0]) < 70) { // Do not allow spawn within 50 units of player! (Cheap way!)
+			    init_X = locationSetter.nextInt(instance.MAX_X); //Note we do not need to add instance.MIN_X because it's 0!
+			    tries++;
+			}
+			tries = 0;
+			while (tries < 5 && Math.abs(init_X - instance.getBug(i).spriteLocation[0]) < 70) {
+			    init_Y = locationSetter.nextInt(instance.MAX_Y);
+			    tries++;
+			}
+			//TODO: Revise the init_LOC setters to be more efficient. Loops are definitely NOT required here.
+		    }
+		}
 		while (Math.abs(init_X - target.spriteLocation[0]) < 50) { // Do not allow spawn within 50 units of player! (Cheap way!)
 			init_X = locationSetter.nextInt(instance.MAX_X); //Note we do not need to add instance.MIN_X because it's 0!
-		}
-		while (Math.abs(init_Y - target.spriteLocation[1]) < 50) {
-			init_Y = locationSetter.nextInt(instance.MAX_Y);
-		}
-		//TODO: Revise the init_LOC setters to be more efficient. Loops are definitely NOT required here.
-		
+		    }
+		    while (Math.abs(init_Y - target.spriteLocation[1]) < 50 ) {
+			init_Y = locationSetter.nextInt(instance.MAX_Y);	
+		    }
 		super.spriteLocation = new int[]{init_X , init_Y};
 	}
 
