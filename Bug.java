@@ -149,7 +149,9 @@ public class Bug extends Entity {
 		}
 		
 	}
-	
+        public void bounceBack(){
+	        
+        }  
 	public void paintComponent(Graphics g) {
 		drawObj(g);
 	}
