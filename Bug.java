@@ -125,6 +125,7 @@ public class Bug extends Entity {
 				this.setSprite("resources/BUG_RIGHT.png");
 			}
 		}
+		
 		if (super.spriteLocation[1] > target.spriteLocation[1]) {
 			deltaY = -1;
 		} else {
@@ -149,9 +150,42 @@ public class Bug extends Entity {
 		}
 		
 	}
-        public void bounceBack(){
-	        
-        }  
+
+	public void bounceBack(Bug other){
+		if (this.spriteLocation[0] < other.spriteLocation[0]) {
+			switch (deltaX) {
+			case -1:
+				this.move();
+				break;
+			case 0:
+				deltaX = -1;
+				this.move();
+				deltaX = 0;
+				break;
+			case 1:
+				deltaX = -1;
+				this.move();
+				deltaX = 1;
+				break;
+			default:
+				System.out.println("Invalid values detected! Exitting...");
+				System.exit(0);
+			}
+		} else if (this.spriteLocation[0] > other.spriteLocation[0]) {
+			switch (deltaX) {
+			case -1:
+				break;
+			case 0:
+				break;
+			case 1:
+				break;
+			default:
+				System.out.println("Invalid values detected! Exitting...");
+				System.exit(0);
+			}
+		}
+	}
+	
 	public void paintComponent(Graphics g) {
 		drawObj(g);
 	}
