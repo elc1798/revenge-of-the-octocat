@@ -12,7 +12,8 @@ public class Bug extends Entity {
     private Octocat target = null;
 	
     public int id = 0;
-	
+    public int facing = 0;
+    
     private Random locationSetter = new Random();
     private long deathTime;
     private boolean dead = false;
@@ -154,18 +155,41 @@ public class Bug extends Entity {
 		
 	//Chase after the octocat!
 	boolean impact = false;
-	if (super.spriteLocation[0] > target.spriteLocation[0]) {
-	    for (int i = 0; i < instance.numBug;i++){
-		if (instance.getBug(i) != null && this.moveBoundries().intersects(instance.getBug(i))){
-		    impact = true;
-			    
-		}
+	Bug other = null;
+	for (int i = 0; i < instance.numBug;i++){
+	    if (instance.getBug(i) != null && this.moveBoundries().intersects(instance.getBug(i))){
+		impact = true;
+		other = instance.getBug(i);
 	    }
+	}
+	if (super.spriteLocation[0] > target.spriteLocation[0]) {
+	    
 	    if (!impact){
 		deltaX = -1;
 		this.setSprite("resources/BUG_LEFT.png");
-	    } else {
-			
+		/*  } else {
+		switch (otherface){ 
+		    
+		case 0:
+		    if (this.spriteLocation[0] < other.spriteLocation[0]){
+			deltaX = -1;
+		    } else {
+			deltaX = 1
+		    } 
+		    break;
+		case 1:
+		    deltaX = -1;
+		    break;
+	        case 2:
+		    if (this.spriteLocation[0] < other.spriteLocation[0]){
+			deltaX = -1;
+		    } else {
+			deltaX = 1;
+		    }
+		    break;
+		case 3:
+		    if ()
+		*/	}
 	    }
 	} else {
 	    deltaX = 1;
