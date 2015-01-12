@@ -163,47 +163,217 @@ public class Bug extends Entity {
 	    }
 	}
 	if (super.spriteLocation[0] > target.spriteLocation[0]) {
-	    
+	    this.setSprite("resources/BUG_LEFT.png");	    
 	    if (!impact){
 		deltaX = -1;
-		this.setSprite("resources/BUG_LEFT.png");
-		/*  } else {
-		switch (otherface){ 
+	    } else {
+		switch (other.facing){ 
 		    
 		case 0:
-		    if (this.spriteLocation[0] < other.spriteLocation[0]){
+		    if (super.spriteLocation[0] < other.spriteLocation[0]){
 			deltaX = -1;
 		    } else {
-			deltaX = 1
+			deltaX = 1;
 		    } 
 		    break;
 		case 1:
 		    deltaX = -1;
 		    break;
 	        case 2:
-		    if (this.spriteLocation[0] < other.spriteLocation[0]){
+		    if (super.spriteLocation[0] < other.spriteLocation[0]){
 			deltaX = -1;
 		    } else {
 			deltaX = 1;
 		    }
 		    break;
 		case 3:
-		    if ()
-		*/	}
+		    if (super.spriteLocation[0] < other.spriteLocation[0]){
+			deltaX = -1;
+		    } else {
+			deltaX = 1;
+		    }
+		    break;
+		case 4:
+		    if (super.spriteLocation[0] < other.spriteLocation[0]){
+			deltaX = -1;
+		    } else {
+			deltaX = 1;
+		    }
+		    break;
+		case 5:
+		    deltaX = -1;
+		    break;
+		case 6:
+		    if (super.spriteLocation[0] < other.spriteLocation[0]){
+			deltaX = -1;
+		    } else {
+			deltaX = 1;
+		    }
+		    break;		    
+		case 7:
+		    deltaX = -1;
+		    break;		    
+		}
 	    }
 	} else {
-	    deltaX = 1;
 	    if (super.spriteLocation[0] != target.spriteLocation[0]) {
 		this.setSprite("resources/BUG_RIGHT.png");
+	 
+		switch (other.facing){ 
+		    
+		case 0:
+		    deltaX = 1;
+		    break;
+		case 1:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaX = 1;
+		    } else {
+			deltaX = -1;
+		    } 
+		    break;
+       	        case 2:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaX = 1;
+		    } else {
+			deltaX = -1;
+		    }
+		    break;
+		case 3:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaX = 1;
+		    } else {
+			deltaX = -1;
+		    }
+		    break;
+		case 4:
+		    deltaX = 1;
+		case 5:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaX = 1;
+		    } else {
+			deltaX = -1;
+		    }
+		    break;		    
+		case 6:
+		    deltaX = 1;		    
+		    break;
+		case 7:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaX = 1;
+		    } else {
+			deltaX = -1;
+		    }
+		    break;
+		}
 	    }
 	}
 		
 	if (super.spriteLocation[1] > target.spriteLocation[1]) {
-	    deltaY = -1;
+	    if (!impact){
+		deltaY = -1;
+	    } else {
+		switch (other.facing){
+		    
+		case 0:
+		    if (super.spriteLocation[1] < other.spriteLocation[1]){
+			deltaY = -1;
+		    } else {
+			 deltaY = 1;
+		    } 
+		    break;
+		case 1:
+		    if (super.spriteLocation[1] < other.spriteLocation[1]){
+			deltaY = -1;
+		    } else {
+			 deltaY = 1;
+		    } 
+		    break;
+		case 2:
+		    if (super.spriteLocation[1] < other.spriteLocation[1]){
+			deltaY = -1;
+		    } else {
+			deltaY = 1;
+		    }
+		    break;
+		case 3:
+		    deltaY = -1;
+		    break;
+		case 4:
+		    if (super.spriteLocation[1] < other.spriteLocation[1]){
+			deltaY = -1;
+		    } else {
+			deltaY = 1;
+		    }
+		    break;
+		case 5:
+		    if (super.spriteLocation[1] < other.spriteLocation[1]){
+			deltaY = -1;
+		    } else {
+			deltaY = 1;
+		    }
+		    break;		    
+		case 6:
+		    deltaY = -1;		    
+		    break;
+		case 7:
+		    deltaY = -1;
+		    break;
+		}
+	    }
 	} else {
-	    deltaY = 1;
+	    if (!impact){
+		deltaY = 1;
+	    } else {
+		switch (other.facing){
+		    
+		case 0:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaY = 1;
+		    } else {
+			deltaY = -1;
+		    } 
+		    break;
+		case 1:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaY = 1;
+		    } else {
+			deltaY = -1;
+		    } 
+		    break;
+		case 2:
+		    deltaY = 1;
+		    break;
+		case 3:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaY = 1;
+		    } else {
+			deltaY = -1;
+		    }
+		    break;
+		case 4:
+		    deltaY = 1;
+		    break;
+		case 5:
+		    deltaY = 1;
+		    break;		    
+		case 6:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaY = 1;
+		    } else {
+			deltaY = -1;
+		    }		    
+		    break;
+		case 7:
+		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+			deltaY = 1;
+		    } else {
+			deltaY = -1;
+		    }
+		    break;
+		}
+	    }
 	}
-		
+	
 	super.spriteLocation[0] += deltaX * getSpeed();
 	super.spriteLocation[1] += deltaY * getSpeed();
 		
