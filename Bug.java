@@ -112,7 +112,7 @@ public class Bug extends Entity {
     public void drawObj(Graphics g) {
 	super.drawObj(g);
     }
-    public int facing(){
+    public void facing(){
 	if (deltaX == -1) {
 	    if (deltaY == -1) {
 		facing = 7;
@@ -137,7 +137,7 @@ public class Bug extends Entity {
 	    }
 	}
 	else if (deltaX == 1){
-	    else if (deltaY == -1) {
+	    if (deltaY == -1) {
 		facing = 6;
 	    }
 	    else if (deltaY == 0) {
@@ -152,20 +152,23 @@ public class Bug extends Entity {
     
     
     public void move() {//Movement alg
-		
+	System.out.println("Bug moved");
 	//Chase after the octocat!
 	boolean impact = false;
 	Bug other = null;
-	for (int i = 0; i < instance.numBug;i++){
-	    if (instance.getBug(i) != null && this.moveBoundries().intersects(instance.getBug(i))){
+	for (int i = 0; i < 3 + 2*instance.getLevel();i++){
+	    if (instance.getBug(i) != null){
+		if (this.moveBoundaries().intersects(instance.getBug(i).moveBoundaries())){
 		impact = true;
 		other = instance.getBug(i);
+		}
 	    }
 	}
 	if (super.spriteLocation[0] > target.spriteLocation[0]) {
 	    this.setSprite("resources/BUG_LEFT.png");	    
 	    if (!impact){
 		deltaX = -1;
+		facing();
 	    } else {
 		switch (other.facing){ 
 		    
@@ -218,6 +221,11 @@ public class Bug extends Entity {
 	} else {
 	    if (super.spriteLocation[0] != target.spriteLocation[0]) {
 		this.setSprite("resources/BUG_RIGHT.png");
+	    }
+	    if (!impact){
+		deltaX = 1;
+		facing();
+	    } else {
 	 
 		switch (other.facing){ 
 		    
@@ -271,6 +279,7 @@ public class Bug extends Entity {
 	if (super.spriteLocation[1] > target.spriteLocation[1]) {
 	    if (!impact){
 		deltaY = -1;
+		facing();
 	    } else {
 		switch (other.facing){
 		    
@@ -323,18 +332,19 @@ public class Bug extends Entity {
 	} else {
 	    if (!impact){
 		deltaY = 1;
+		facing();
 	    } else {
 		switch (other.facing){
 		    
 		case 0:
-		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+		    if (super.spriteLocation[1] > other.spriteLocation[1]){
 			deltaY = 1;
 		    } else {
 			deltaY = -1;
 		    } 
 		    break;
 		case 1:
-		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+		    if (super.spriteLocation[1] > other.spriteLocation[1]){
 			deltaY = 1;
 		    } else {
 			deltaY = -1;
@@ -344,7 +354,7 @@ public class Bug extends Entity {
 		    deltaY = 1;
 		    break;
 		case 3:
-		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+		    if (super.spriteLocation[1] > other.spriteLocation[1]){
 			deltaY = 1;
 		    } else {
 			deltaY = -1;
@@ -357,14 +367,14 @@ public class Bug extends Entity {
 		    deltaY = 1;
 		    break;		    
 		case 6:
-		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+		    if (super.spriteLocation[1] > other.spriteLocation[1]){
 			deltaY = 1;
 		    } else {
 			deltaY = -1;
 		    }		    
 		    break;
 		case 7:
-		    if (super.spriteLocation[0] > other.spriteLocation[0]){
+		    if (super.spriteLocation[1] > other.spriteLocation[1]){
 			deltaY = 1;
 		    } else {
 			deltaY = -1;
@@ -390,7 +400,7 @@ public class Bug extends Entity {
 	if (super.spriteLocation[1] < instance.MIN_Y) {
 	    super.spriteLocation[1] = instance.MIN_Y;
 	}
-		
+	System.out.println("done"); 	
     }
 
     /*	public void bounceBack(Bug other){

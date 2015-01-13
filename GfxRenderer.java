@@ -146,9 +146,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					}
 					for (Bug c : enemies){
 					    if (c != null && b.id != c.id && !c.getType().equals("BUG_GHOST")){
-							while (b.moveBoundaries().intersects(c.moveBoundaries())){
-							    b.bounceBack(c);
-							}
+
 						}
 					}
 				} else if (b != null && b.getType().equals("BUG_GHOST")) {
