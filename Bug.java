@@ -84,7 +84,9 @@ public class Bug extends Entity {
 		super.setDamage(n);
 	}
 	public void setSpeed(int n) {
-		super.setSpeed(n);
+		if (this.getSpeed() < 5) {
+			super.setSpeed(n);
+		}
 	}
 	public void setType(String _type) {
 		super.setType(_type);
