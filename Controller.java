@@ -18,7 +18,7 @@ public class Controller extends JFrame {
 	private BackGroundLoader bgl;
 	private GfxRenderer gfx;
 	private Bug[] enemies;
-	private Segfault[] projectiles = new Segfault[5];
+        private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
 	
 	private int level = 1;
@@ -171,8 +171,16 @@ public class Controller extends JFrame {
 		addAmmo();
 	}
 	
-	public void stopKeyListener() {
+        public void stopKeyListener() {
 		removeKeyListener(userIn);
 	}
-	
+    
+        //Accesses Bug[] enemies with parameter index and returns object
+        public Bug getBug(int index) {
+	    if (index<enemies.length){
+		return enemies[index];
+	    } else {
+		return null;
+	    }
+	}
 }

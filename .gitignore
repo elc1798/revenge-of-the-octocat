@@ -14,3 +14,7 @@ hs_err_pid*
 #Ethan's Eclipse Retriever
 
 RETRIEVE.sh
+
+#Ethan's Eclipse Injector
+
+INJECT.sh
