@@ -144,13 +144,6 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						requireOverlayReset = true;
 						overlayChanged = System.currentTimeMillis();
 					}
-					for (Bug c : enemies){
-						if (b.id != c.id){
-							if (b.boundaries().intersects(c.boundaries())){
-								
-							}
-						}
-					}
 				} else if (b != null && b.getType().equals("BUG_GHOST")) {
 					b.setLives(-9001);
 				}
