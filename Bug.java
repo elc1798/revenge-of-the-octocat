@@ -152,12 +152,12 @@ public class Bug extends Entity {
     
     
     public void move() {//Movement alg
-	System.out.println("Bug moved");
+	//System.out.println("Bug moved");
 	//Chase after the octocat!
 	boolean impact = false;
 	Bug other = null;
 	for (int i = 0; i < 3 + 2*instance.getLevel();i++){
-	    if (instance.getBug(i) != null){
+	    if (instance.getBug(i) != null && instance.getBug(i).id != this.id){
 		if (this.moveBoundaries().intersects(instance.getBug(i).moveBoundaries())){
 		impact = true;
 		other = instance.getBug(i);
@@ -165,7 +165,7 @@ public class Bug extends Entity {
 	    }
 	}
 	if (super.spriteLocation[0] > target.spriteLocation[0]) {
-	    this.setSprite("resources/BUG_LEFT.png");	    
+	    this.setSprite("resources/BUG_LEFT.png");
 	    if (!impact){
 		deltaX = -1;
 		facing();
@@ -400,7 +400,7 @@ public class Bug extends Entity {
 	if (super.spriteLocation[1] < instance.MIN_Y) {
 	    super.spriteLocation[1] = instance.MIN_Y;
 	}
-	System.out.println("done"); 	
+	//	System.out.println("done"); 	
     }
 
     /*	public void bounceBack(Bug other){
