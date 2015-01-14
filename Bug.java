@@ -27,7 +27,11 @@ public class Bug extends Entity {
 	id = _id;
 	setLives(1 + (int)(instance.getLevel() / 2));
 	setDamage(1);
-	setSpeed(instance.getLevel());
+	if (instance.getLevel() <= 3) {
+		setSpeed(1);
+	} else {
+		setSpeed(instance.getLevel() / 2);
+	}
 	setType("BUG_HEALTHY");
 	setSprite("resources/BUG_RIGHT.png");
 	super.spriteBounds = new int[]{70 , 70};

@@ -85,7 +85,7 @@ public class Controller extends JFrame {
 	    stock = 5;
 	}
 		
-	System.out.println("Ammo stock: " + stock + " / 5");
+//	System.out.println("Ammo stock: " + stock + " / 5");
     }
 	
     public void shoot(int dir) {
@@ -99,7 +99,7 @@ public class Controller extends JFrame {
 	    projectiles[stock - 1] = new Segfault(this , player , dir , stock - 1);
 	    stock--;
 	}
-	System.out.println("Ammo stock: " + stock + " / 5");
+//	System.out.println("Ammo stock: " + stock + " / 5");
     }
 	
     public void meleeAtk() {
