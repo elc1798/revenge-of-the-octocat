@@ -33,7 +33,7 @@ public class Bug extends Entity {
 	super.spriteBounds = new int[]{70 , 70};
 	int init_X = target.spriteLocation[0];
 	int init_Y = target.spriteLocation[1];
-	for (int i = 0; i < 3 + 2 * instance.getLevel() - 1; i++){
+	for (int i = 0; i < 2 * instance.getLevel() - 1; i++){
 	    if (instance.getBug(i) != null){
 		int tries = 0;
 		while (tries < 5 && Math.abs(init_X - instance.getBug(i).spriteLocation[0]) < 70) { // Do not allow spawn within 50 units of player! (Cheap way!)
@@ -158,8 +158,8 @@ public class Bug extends Entity {
 	//Chase after the octocat!
 	boolean impact = false;
 	Bug other = null;
-	for (int i = 0; i < 3 + 2*instance.getLevel();i++){
-	    if (instance.getBug(i) != null && instance.getBug(i).id != this.id){
+	for (int i = 0; i < 2 * instance.getLevel();i++){
+	    if (instance.getBug(i) != null && instance.getBug(i).id != this.id && !instance.getBug(i).getType().equals("BUG_GHOST")){
 		if (this.moveBoundaries().intersects(instance.getBug(i).moveBoundaries())){
 		impact = true;
 		other = instance.getBug(i);
