@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class SplashScreen extends JPanel implements Runnable , ActionListener {
 
+	private JButton startGame;
 	private BackGroundLoader b;
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
@@ -25,6 +28,8 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 	public SplashScreen() {
 		startGame = false; //Just to clarify
 		b = new BackGroundLoader("SPLASHSCREEN.png");
+		startGame.addActionListener(this);
+		
 	}
 
 	@Override
@@ -44,7 +49,9 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		// Do Nothing
+		if (arg0.getSource() == startButton) {
+			startGame = true;
+		}
 	}
 
 	@Override

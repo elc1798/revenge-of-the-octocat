@@ -9,8 +9,10 @@ public class Game {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				
 				Controller gameFrame = new Controller();
 				gameFrame.setVisible(true);
+				
 			}
 			
 		});

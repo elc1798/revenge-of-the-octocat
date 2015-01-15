@@ -104,8 +104,8 @@ public class Octocat extends Entity {
 	}
 	public void setSpeed(int n) {
 		super.setSpeed(n);
-		if (this.getSpeed() > 5) {
-			this.setSpeed(5);
+		if (this.getSpeed() > 8) {
+			this.setSpeed(8);
 		}
 	}
 	public void setType(String _type) {
