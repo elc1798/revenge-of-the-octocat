@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class SplashScreen extends JPanel implements Runnable , ActionListener {
 
-	private JButton startGame;
+	private JButton startButton;
 	private BackGroundLoader b;
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
@@ -28,7 +28,7 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 	public SplashScreen() {
 		startGame = false; //Just to clarify
 		b = new BackGroundLoader("SPLASHSCREEN.png");
-		startGame.addActionListener(this);
+		startButton.addActionListener(this);
 		
 	}
 

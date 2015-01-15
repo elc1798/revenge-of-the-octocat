@@ -28,6 +28,7 @@ public class Boss extends Entity{
 		setSprite("resources/BUG_BOSS_LEFT.png");
 		super.spriteBounds = new int[]{95 , 95};
 		super.spriteLocation = new int[]{350 , 300}; //Octocat will spawn at {600 , 300} at boss level
+		dead = false;
 	}
 
 	public int getLives() {
@@ -48,6 +49,7 @@ public class Boss extends Entity{
 	public void setLives(int n) {
 		super.setLives(n);
 		if (this.getLives() <= 0) {
+			dead = true;
 			//Do death animation here
 		}
 	}
@@ -59,5 +61,91 @@ public class Boss extends Entity{
 	}
 	public void setType(String _type) {
 		super.setType(_type);
+	}
+	public void setSprite(String PIC) {
+		super.setSprite(PIC);
+	}
+	public void drawObj(Graphics g) {
+		super.drawObj(g);
+	}
+	public void facing(){
+		if (deltaX == -1) {
+			if (deltaY == -1) {
+				facing = 7;
+			}
+			else if (deltaY == 0) {
+				facing = 1;
+			}
+			else if (deltaY == 1) {
+				facing = 5;
+			}
+		}
+		else if (deltaX == 0) {
+			if (deltaY == -1){
+				facing = 3;
+			}
+			else if (deltaY == 0) {
+				//MEANINGLESS LINES OF CODE!~
+				//Stationary Bugs
+			}
+			else if (deltaY == 1) {
+				facing = 2;
+			}
+		}
+		else if (deltaX == 1){
+			if (deltaY == -1) {
+				facing = 6;
+			}
+			else if (deltaY == 0) {
+				facing = 0;
+			} 
+			else if (deltaY == 1) {
+				facing  = 4;
+			} 
+		}
+	}
+	
+	public void move() {
+		
+		//Drop powerups every few seconds
+		
+		
+		
+		//Avoid getting killed by the octocat
+		
+		if (this.spriteLocation[0] < target.spriteLocation[0]) {
+			deltaX = -1;
+		} else {
+			deltaX = 1;
+		}
+		if (this.spriteLocation[1] < target.spriteLocation[1]) {
+			deltaY = -1;
+		} else {
+			deltaY = 1;
+		}
+		
+		//Move:
+		
+		super.spriteLocation[0] += deltaX * getSpeed();
+		super.spriteLocation[1] += deltaY * getSpeed();
+		
+		//Position correction:
+		if (super.spriteLocation[0] > instance.MAX_X - super.spriteBounds[0]) {
+			super.spriteLocation[0] = instance.MAX_X - super.spriteBounds[0];
+		}
+		if (super.spriteLocation[0] < instance.MIN_X) {
+			super.spriteLocation[0] = instance.MIN_X;
+		}
+		if (super.spriteLocation[1] > instance.MAX_Y - super.spriteBounds[1]) {
+			super.spriteLocation[1] = instance.MAX_Y - super.spriteBounds[1];
+		}
+		if (super.spriteLocation[1] < instance.MIN_Y) {
+			super.spriteLocation[1] = instance.MIN_Y;
+		}
+		
+	}
+	
+	public void paintComponent(Graphics g) {
+		drawObj(g);
 	}
 }

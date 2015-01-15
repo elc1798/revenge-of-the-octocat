@@ -7,7 +7,7 @@ public class Powerup extends Entity {
 	//Powerups don't move !
 	//Powerups are invincible and cannot be hit by anything!
 	
-	int choice = -1;
+	public int choice = -1;
 	
 	public Powerup(int[] spriteLoc) {
 		Random r = new Random();
@@ -38,6 +38,25 @@ public class Powerup extends Entity {
 			System.exit(0);
 		}
 		
+	}
+	
+	public void setPowerup(int n) {
+		choice = n;
+		super.setType("POWERUP");
+		super.setSpeed(0);
+		if (0 <= choice && choice <= 2) {
+			super.setSprite("resources/POWERUP_SPEED.png");
+		} else if (3 <= choice && choice <= 7) {
+			super.setSprite("resources/POWERUP_LIFE.png");
+			super.setType("POWERUP_LIFE");
+		} else if (8 <= choice && choice <= 10) {
+			super.setSprite("resources/POWERUP_DAMAGE.png");
+		} else if (11 <= choice && choice <= 13) {
+			super.setSprite("resources/POWERUP_AMMO.png");
+		} else {
+			System.out.println("Error: Invalid ID for powerup. Exitting...");
+			System.exit(0);
+		}
 	}
 	
 	public void givePowerup(Octocat player , Controller instance) {
