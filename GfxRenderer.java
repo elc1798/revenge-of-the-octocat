@@ -16,6 +16,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private Octocat OC;
 	private BackGroundLoader bgl;
 	private Bug[] enemies;
+	private Boss[] bosses;
 	private Segfault[] projectiles;
 	private Controller instance;
 	private Overlay overlay;
@@ -25,9 +26,12 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	private boolean alive = true;
+	private boolean requireNextLevel = false;
+	
 	public boolean requireOverlayReset = false;
 	public long overlayChanged = System.currentTimeMillis();
-	private boolean requireNextLevel = false;
+	
+	private long bossSpawnedOverlay = System.currentTimeMillis();
 
 	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
 		OC = session;
@@ -74,6 +78,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			for (Segfault s : projectiles) {
 				if (s != null) {
 					s.paintComponent(g);
+				}
+			}
+			for (Boss bau5 : bosses) {
+				if (bau5 != null) {
+					bau5.paintComponent(g);
 				}
 			}
 			for (Bug b : enemies) {
@@ -133,6 +142,18 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 
 			Rectangle currOCBounds = OC.boundaries();
 
+			for (Boss bau5 : bosses) {
+				if (bau5 != null) {
+					bau5.move();
+					if (System.currentTimeMillis() - bossSpawnedOverlay > 3000) {
+						//Spawn a powerup every 3 seconds
+						bossSpawnedOverlay = System.currentTimeMillis();
+						
+						
+					}
+				}
+			}
+			
 			for (Bug b : enemies) {
 				if (b != null && !b.getType().equals("BUG_GHOST")) {
 					b.move();

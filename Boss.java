@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class Boss extends Entity{
 
-	private int deltaX = 0;
-	private int deltaY = 0;
+	private int deltaX = -1;
+	private int deltaY = -1;
 
 	private Controller instance = null;
 	private Octocat target = null;
@@ -15,7 +15,8 @@ public class Boss extends Entity{
 	public int facing = 0;
 
 	private Random r = new Random();
-	private boolean dead = false;
+	
+	public boolean dead = false;
 
 	public Boss(Controller ctrl , Octocat prey , int _id) {
 		instance = ctrl;
@@ -105,18 +106,20 @@ public class Boss extends Entity{
 		}
 	}
 	
+	public boolean closeToOctocat() {
+		return (Math.abs(this.spriteLocation[0] - target.spriteLocation[0]) < 80) && (Math.abs(this.spriteLocation[1] - target.spriteLocation[1]) < 80);
+	}
+	
 	public void move() {
-		
-		//Drop powerups every few seconds
-		
-		
 		
 		//Avoid getting killed by the octocat
 		
 		if (this.spriteLocation[0] < target.spriteLocation[0]) {
 			deltaX = -1;
+			this.setSprite("resources/BUG_BOSS_LEFT.png");
 		} else {
 			deltaX = 1;
+			this.setSprite("resources/BUG_BOSS_RIGHT.png");
 		}
 		if (this.spriteLocation[1] < target.spriteLocation[1]) {
 			deltaY = -1;
@@ -142,7 +145,40 @@ public class Boss extends Entity{
 		if (super.spriteLocation[1] < instance.MIN_Y) {
 			super.spriteLocation[1] = instance.MIN_Y;
 		}
+		if (closeToOctocat()) { //If the Mega-Bug is too close, it will hope over the Octocat and run :)
+			if (super.spriteLocation[0] > target.spriteLocation[0] && super.spriteLocation[1] < target.spriteLocation[1]) {
+				//Boss is upper right from octocat
+				super.spriteLocation[0] = target.spriteLocation[0] - 100;
+				super.spriteLocation[1] = target.spriteLocation[1] + 100;
+				
+			} else if (super.spriteLocation[0] > target.spriteLocation[0] && super.spriteLocation[1] > target.spriteLocation[1]) {
+				//Lower right
+				super.spriteLocation[0] = target.spriteLocation[0] - 100;
+				super.spriteLocation[1] = target.spriteLocation[1] - 100;
+			} else if (super.spriteLocation[0] < target.spriteLocation[0] && super.spriteLocation[1] > target.spriteLocation[1]) {
+				//Lower left
+				super.spriteLocation[0] = target.spriteLocation[0] + 100;
+				super.spriteLocation[1] = target.spriteLocation[1] - 100;
+			} else if (super.spriteLocation[0] < target.spriteLocation[0] && super.spriteLocation[1] < target.spriteLocation[1]) {
+				//Upper left
+				super.spriteLocation[0] = target.spriteLocation[0] + 100;
+				super.spriteLocation[1] = target.spriteLocation[1] + 100;
+			}
+			//Update speeds
+			if (this.spriteLocation[0] < target.spriteLocation[0]) {
+				deltaX = -1;
+			} else {
+				deltaX = 1;
+			}
+			if (this.spriteLocation[1] < target.spriteLocation[1]) {
+				deltaY = -1;
+			} else {
+				deltaY = 1;
+			}
+		}
 		
+		//Update direction
+		this.facing();
 	}
 	
 	public void paintComponent(Graphics g) {
