@@ -12,23 +12,23 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class GfxRenderer extends JPanel implements Runnable , ActionListener {
-	
+
 	private Octocat OC;
 	private BackGroundLoader bgl;
 	private Bug[] enemies;
 	private Segfault[] projectiles;
 	private Controller instance;
 	private Overlay overlay;
-	
+
 	public ArrayList<Powerup> powerups = new ArrayList<Powerup>(); //Made public so Controller can have access
-	
+
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	private boolean alive = true;
 	public boolean requireOverlayReset = false;
 	public long overlayChanged = System.currentTimeMillis();
 	private boolean requireNextLevel = false;
-	
+
 	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
 		OC = session;
 		bgl = b;
@@ -37,37 +37,37 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		instance = _instance;
 		overlay = new Overlay(instance);
 	}
-	
+
 	public void resetPointer(Bug[] bugPointer) {
 		enemies = bugPointer;
 	}
-	
+
 	public void cleanupPowerups() {
 		powerups = null;
 		powerups = new ArrayList<Powerup>();
 	}
-	
+
 	@Override
 	public void addNotify() {
 		super.addNotify();
-		
+
 		animus = new Thread(this);
 		animus.start();
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (OC.getLives() <= 0) {
 			String msg = "Game over! Score: " + instance.score;
-            Font small = new Font("Helvetica", Font.BOLD, 28);
-            FontMetrics metr = this.getFontMetrics(small);
-            setBackground(Color.DARK_GRAY);
-            g.setColor(Color.white);
-            g.setFont(small);
-            g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y / 2);
-            alive = false;
-            instance.stopKeyListener();
+			Font small = new Font("Helvetica", Font.BOLD, 28);
+			FontMetrics metr = this.getFontMetrics(small);
+			setBackground(Color.DARK_GRAY);
+			g.setColor(Color.white);
+			g.setFont(small);
+			g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y / 2);
+			alive = false;
+			instance.stopKeyListener();
 		} else {
 			bgl.paintComponent(g);
 			OC.paintComponent(g);
@@ -89,7 +89,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			overlay.paintComponent(g);
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -99,25 +99,25 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	@Override
 	public void run() {
 		long prevTime , timeDiff , sleepTime;
-		
+
 		prevTime = System.currentTimeMillis();
-		
+
 		while (alive) {
-			
+
 			if (requireOverlayReset && System.currentTimeMillis() - overlayChanged > 3000) {
-					overlay.resetOverlay();
-					requireOverlayReset = false;
-					if (requireNextLevel) {
-						for (Segfault s : projectiles) {
-							if (s != null) {
-								instance.rmAmmo(s.id);
-							}
+				overlay.resetOverlay();
+				requireOverlayReset = false;
+				if (requireNextLevel) {
+					for (Segfault s : projectiles) {
+						if (s != null) {
+							instance.rmAmmo(s.id);
 						}
-						instance.nextLevel();
-						requireNextLevel = false;
 					}
+					instance.nextLevel();
+					requireNextLevel = false;
+				}
 			}
-			
+
 			if (instance.numBugs() <= 0) {
 				overlay.victoryScreen();
 				if (!requireNextLevel) {
@@ -126,13 +126,13 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					requireNextLevel = true;
 				}
 			}			
-			
+
 			OC.move();
-			
+
 			//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
-			
+
 			Rectangle currOCBounds = OC.boundaries();
-			
+
 			for (Bug b : enemies) {
 				if (b != null && !b.getType().equals("BUG_GHOST")) {
 					b.move();
@@ -145,7 +145,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						overlayChanged = System.currentTimeMillis();
 					}
 					for (Bug c : enemies){
-					    if (c != null && b.id != c.id && !c.getType().equals("BUG_GHOST")){
+						if (c != null && b.id != c.id && !c.getType().equals("BUG_GHOST")){
 
 						}
 					}
@@ -182,14 +182,14 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				}
 			}
 			repaint();
-			
+
 			timeDiff = System.currentTimeMillis() - prevTime;
 			sleepTime = DELAY - timeDiff;
-			
+
 			if (sleepTime < 0) {
 				sleepTime = 2; // Do not allow negative sleepTime
 			}
-			
+
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
@@ -197,11 +197,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
-			
+
 			prevTime = System.currentTimeMillis();
-			
+
 		}
-		
+
 	}
 
 }
