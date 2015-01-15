@@ -18,7 +18,7 @@ public class Segfault extends Entity {
 		host = player;
 		setLives(Integer.MAX_VALUE);//Indestructible?
 		setDamage(Integer.MAX_VALUE);//Indestructible?
-		setSpeed(7);
+		setSpeed(9);
 		id = _id;
 		setType("SEGFAULT");
 		super.spriteBounds = new int[]{25 , 25};

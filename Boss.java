@@ -1,7 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.util.Random;
 
 public class Boss extends Entity{
 
@@ -13,8 +11,6 @@ public class Boss extends Entity{
 
 	public int id = 0;//This shouldn't really change
 	public int facing = 0;
-
-	private Random r = new Random();
 	
 	public boolean dead = false;
 
@@ -28,7 +24,9 @@ public class Boss extends Entity{
 		setType("BUG_BOSS");
 		setSprite("resources/BUG_BOSS_LEFT.png");
 		super.spriteBounds = new int[]{95 , 95};
-		super.spriteLocation = new int[]{350 , 300}; //Octocat will spawn at {600 , 300} at boss level
+		super.spriteLocation = new int[]{350 , 300};
+		//Octocat will spawn at {600 , 300} at boss level
+		target.spriteLocation = new int[]{600 , 300};
 		dead = false;
 	}
 
@@ -48,6 +46,7 @@ public class Boss extends Entity{
 		return super.getSprite();
 	}
 	public void setLives(int n) {
+		System.out.println(n);
 		super.setLives(n);
 		if (this.getLives() <= 0) {
 			dead = true;
@@ -112,6 +111,10 @@ public class Boss extends Entity{
 	
 	public void move() {
 		
+		//Prevents octocat from zooming past it
+		
+		this.setSpeed(target.getSpeed() - 1);
+		
 		//Avoid getting killed by the octocat
 		
 		if (this.spriteLocation[0] < target.spriteLocation[0]) {
@@ -119,7 +122,7 @@ public class Boss extends Entity{
 			this.setSprite("resources/BUG_BOSS_LEFT.png");
 		} else {
 			deltaX = 1;
-			this.setSprite("resources/BUG_BOSS_RIGHT.png");
+			//this.setSprite("resources/BUG_BOSS_RIGHT.png");
 		}
 		if (this.spriteLocation[1] < target.spriteLocation[1]) {
 			deltaY = -1;

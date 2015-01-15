@@ -18,19 +18,21 @@ public class Controller extends JFrame {
 	private BackGroundLoader bgl;
 	private GfxRenderer gfx;
 	private Bug[] enemies;
+	private Boss[] bosses;
 	private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
 
-	private int level = 1;
+	private int level = 10;
 	private int stock = 0;
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
 	private Random r = new Random();
 	private String bkgrndPrefix = "resources/BKGRND_";
 	private String[] bkgrndOrder = new String[]{"ENTRY.jpg" , "ROOTS.jpg" , "MOBO.jpg" , "HUB.jpg" , "NET.jpg"};
-	private SplashScreen startmenu = null;
+	//private SplashScreen startmenu = null;
 
 	public int score = 0;
+	public boolean isBossLevel = false;
 
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
@@ -53,7 +55,8 @@ public class Controller extends JFrame {
 			enemies[i] = new Bug(this , player , i);
 		}
 		enemiesLeft = enemies.length;
-		gfx = new GfxRenderer(player , bgl , enemies , projectiles , this);
+		bosses = new Boss[]{null , null , null};
+		gfx = new GfxRenderer(player , bgl , enemies , projectiles , this , bosses);
 
 		setPreferredSize(new Dimension(950 , 600));
 
@@ -106,18 +109,50 @@ public class Controller extends JFrame {
 	public void meleeAtk() {
 		/*
 		 * Octocat's melee attack!
-		 * Octocat lashes out in a 'circle' (Actually a rectangle) , dealing to *a single* enemy in the zone of attack
+		 * Octocat lashes out in a 'circle' (Actually a rectangle) , dealing to up to 3 enemies in the zone of attack
 		 */
 
 		currHitZone = new Rectangle(player.spriteLocation[0] - 25 , player.spriteLocation[1] - 25 , player.spriteBounds[0] + 50 , player.spriteBounds[1] + 50);
-
+		
+		int enemiesHit = 0;
+		
+		for (Boss bau5 : bosses) {
+			if (bau5 != null && currHitZone != null) {
+				if (bau5.boundaries().intersects(currHitZone)) {
+					bau5.setLives(bau5.getLives() - 1);
+					enemiesHit++;
+					if (enemiesHit >= 3) {
+						currHitZone = null;
+						break;
+					}
+				}
+			}
+		}
+		
 		for (Bug b : enemies) {
-			if (b != null) {
+			if (b != null && currHitZone != null) {
 				if (b.boundaries().intersects(currHitZone)) {
 					b.setLives(b.getLives() - player.getDamage());
 					//System.out.println(b.getLives());
-					currHitZone = null;
-					break;
+					enemiesHit++;
+					if (enemiesHit >= 3) {
+						currHitZone = null;
+						break;
+					}
+				}
+			}
+		}
+		
+		for (Bug b : gfx.bossesMinions) {
+			if (b != null && currHitZone != null) {
+				if (b.boundaries().intersects(currHitZone)) {
+					gfx.bossesMinions.set(b.id , null); //One shot!
+					//System.out.println(b.getLives());
+					enemiesHit++;
+					if (enemiesHit >= 3) {
+						currHitZone = null;
+						break;
+					}
 				}
 			}
 		}
@@ -153,14 +188,19 @@ public class Controller extends JFrame {
 	public void gameOver() {
 		//Graphics drawing handled in GfxRenderer
 		System.out.println("You lose!");
+		System.gc(); //Cleanup memory :)
 		System.exit(0);
 	}
 
 	public void nextLevel() {
+		isBossLevel = false;
 		bgl.loadImage(bkgrndPrefix + bkgrndOrder[level % bkgrndOrder.length]);
 		level++;
 		enemies = null;
 		enemies = new Bug[level * 2];
+		for (int i = 0; i < 3; i++) {
+			bosses[i] = null;
+		}
 		enemiesLeft = enemies.length;
 		for (int i = 0; i < enemies.length; i++) {
 			enemies[i] = new Bug(this , player , i);
@@ -172,10 +212,12 @@ public class Controller extends JFrame {
 		addAmmo();
 		
 		if (level == 11 || level == 21 || level == 31) {
+			isBossLevel = true;
 			bgl.loadImage("resources/BKGRND_BOSS_LEVEL.jpeg");
 			gfx.spawnBoss();
 		}
-		
+		System.out.println("Level " + level);
+		System.gc(); //Cleanup unnecessary RAM addresses
 	}
 
 	public void stopKeyListener() {

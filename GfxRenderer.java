@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import java.util.Random;
 
 @SuppressWarnings("serial")
 public class GfxRenderer extends JPanel implements Runnable , ActionListener {
@@ -34,15 +35,17 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	
 	private long bossSpawnedPowerup = System.currentTimeMillis();
 	private long bossSpawnedBugs = System.currentTimeMillis();
+	private int minionsSpawned = 0;
+	private Random r = new Random();
 
-	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
+	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance , Boss[] _bosses) {
 		OC = session;
 		bgl = b;
 		enemies = bugs;
 		projectiles = sfs;
 		instance = _instance;
 		overlay = new Overlay(instance);
-		bosses = new Boss[]{null , null , null};
+		bosses = _bosses;
 	}
 
 	public void resetPointer(Bug[] bugPointer) {
@@ -54,6 +57,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		powerups = new ArrayList<Powerup>();
 	}
 
+	public void cleanupBossMinions() {
+		bossesMinions = null;
+		bossesMinions = new ArrayList<Bug>();
+	}
+	
 	public void spawnBoss() {
 		for (int i = 0; i < instance.getLevel() / 10; i++) {
 			bosses[i] = new Boss(instance , OC , i);
@@ -92,6 +100,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			for (Boss bau5 : bosses) {
 				if (bau5 != null) {
 					bau5.paintComponent(g);
+				}
+			}
+			for (Bug b : bossesMinions) {
+				if (b != null) {
+					b.paintComponent(g);
 				}
 			}
 			for (Bug b : enemies) {
@@ -136,7 +149,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				}
 			}
 
-			if (instance.numBugs() <= 0) {
+			if (instance.numBugs() <= 0 && !instance.isBossLevel) {
 				overlay.victoryScreen();
 				if (!requireNextLevel) {
 					requireOverlayReset = true;
@@ -145,6 +158,29 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				}
 			}			
 
+			if (instance.isBossLevel) {
+				boolean allBossesDead = true;
+				for (Boss bau5 : bosses) {
+					if (bau5 != null) {
+						allBossesDead = allBossesDead && bau5.dead;
+						/*
+						 * Logic:
+						 * Assume all bosses are dead.
+						 * If all bosses are dead, bau5 != null evaluates to false every time, yielding all bosses are indeed dead
+						 * Otherwise, bau5.dead by default will return false if it is alive, making it false
+						 */
+					}
+				}
+				if (allBossesDead) {
+					overlay.victoryScreen();
+					if (!requireNextLevel) {
+						requireOverlayReset = true;
+						overlayChanged = System.currentTimeMillis();
+						requireNextLevel = true;
+					}
+				}
+			}
+			
 			OC.move();
 
 			//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
@@ -158,17 +194,35 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						//Spawn a powerup every 3 seconds
 						bossSpawnedPowerup = System.currentTimeMillis();
 						
-						powerups.add(new Powerup(bau5.spriteLocation));
+						powerups.add(new Powerup(bau5.spriteLocation.clone()));
 					}
 					if (System.currentTimeMillis() - bossSpawnedBugs > 5000) {
 						//Spawn a bunch of bugs every 5 seconds
 						bossSpawnedBugs = System.currentTimeMillis();
-						
-						bossesMinions.add(new Bug(instance , OC , bossesMinions.size()));
+						int toSpawn = r.nextInt(4) + 2; //Between 2 - 5 bugs
+						for (int i = 0; i < toSpawn; i++) {
+							bossesMinions.add(new Bug(instance , OC , minionsSpawned));
+							bossesMinions.get(minionsSpawned).spriteLocation[0] = bau5.spriteLocation[0];
+							bossesMinions.get(minionsSpawned).spriteLocation[1] = bau5.spriteLocation[1];
+							minionsSpawned++;
+						}
 					}
 				}
 			}
-			
+			for (Bug b : bossesMinions) {
+				if (b != null && !b.getType().equals("BUG_GHOST")) {
+					b.move();
+					if (b.boundaries().intersects(currOCBounds)) {
+						OC.setLives(OC.getLives() - b.getDamage());
+						bossesMinions.set(b.id , null);
+						overlay.rmLifeScreen();
+						requireOverlayReset = true;
+						overlayChanged = System.currentTimeMillis();
+					}
+				} else if (b != null && b.getType().equals("BUG_GHOST")) {
+					b.setLives(-9001);
+				}
+			}
 			for (Bug b : enemies) {
 				if (b != null && !b.getType().equals("BUG_GHOST")) {
 					b.move();
@@ -180,11 +234,6 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 						requireOverlayReset = true;
 						overlayChanged = System.currentTimeMillis();
 					}
-					for (Bug c : enemies){
-						if (c != null && b.id != c.id && !c.getType().equals("BUG_GHOST")){
-
-						}
-					}
 				} else if (b != null && b.getType().equals("BUG_GHOST")) {
 					b.setLives(-9001);
 				}
@@ -193,6 +242,16 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				if (s != null) {
 					s.move();
 					Rectangle currSFBounds = s.boundaries();	//Note: Entity.boundaries() creates a new Rectangle EVERY TIME it is called. To save runtime, create a variable instead of calling it over and over again
+					//Prioritize hitting the boss over hitting the bug:
+					for (Boss bau5 : bosses) {
+						if (bau5 != null && !bau5.dead) {
+							if (bau5.boundaries().intersects(currSFBounds)) {
+								bau5.setLives(bau5.getLives() - 1);//Mwahahahaha only 1 damage XD
+								instance.rmAmmo(s.id);
+								break;
+							}
+						}
+					}
 					for (Bug b : enemies) {
 						if (b != null && !b.getType().equals("BUG_GHOST")) {
 							if (b.boundaries().intersects(currSFBounds)) {
