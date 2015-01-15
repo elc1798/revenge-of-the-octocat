@@ -122,7 +122,7 @@ Worked on bug overlap spawn
 
 worked on bug overlap when moving
 
-## 1/14/14
+## 1/14/15
 
 ### Jesse Elliott and Ethan Cheng
 
@@ -131,3 +131,9 @@ Fixed bug overlaps and directions, tweaked speed values to be more playable, con
 ### Ethan Cheng
 
 Began working on programmatical aspect of splash screen
+
+## 1/15/15
+
+### Ethan Cheng
+
+Worked on boss!
