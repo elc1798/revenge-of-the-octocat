@@ -170,6 +170,12 @@ public class Controller extends JFrame {
 		addAmmo();
 		addAmmo();
 		addAmmo();
+		
+		if (level == 11 || level == 21 || level == 31) {
+			bgl.loadImage("resources/BKGRND_BOSS_LEVEL.jpeg");
+			gfx.spawnBoss();
+		}
+		
 	}
 
 	public void stopKeyListener() {

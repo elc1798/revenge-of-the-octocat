@@ -22,7 +22,8 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private Overlay overlay;
 
 	public ArrayList<Powerup> powerups = new ArrayList<Powerup>(); //Made public so Controller can have access
-
+	public ArrayList<Bug> bossesMinions = new ArrayList<Bug>();
+	
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	private boolean alive = true;
@@ -31,7 +32,8 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	public boolean requireOverlayReset = false;
 	public long overlayChanged = System.currentTimeMillis();
 	
-	private long bossSpawnedOverlay = System.currentTimeMillis();
+	private long bossSpawnedPowerup = System.currentTimeMillis();
+	private long bossSpawnedBugs = System.currentTimeMillis();
 
 	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance) {
 		OC = session;
@@ -40,6 +42,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		projectiles = sfs;
 		instance = _instance;
 		overlay = new Overlay(instance);
+		bosses = new Boss[]{null , null , null};
 	}
 
 	public void resetPointer(Bug[] bugPointer) {
@@ -51,6 +54,12 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		powerups = new ArrayList<Powerup>();
 	}
 
+	public void spawnBoss() {
+		for (int i = 0; i < instance.getLevel() / 10; i++) {
+			bosses[i] = new Boss(instance , OC , i);
+		}
+	}
+	
 	@Override
 	public void addNotify() {
 		super.addNotify();
@@ -145,11 +154,17 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			for (Boss bau5 : bosses) {
 				if (bau5 != null) {
 					bau5.move();
-					if (System.currentTimeMillis() - bossSpawnedOverlay > 3000) {
+					if (System.currentTimeMillis() - bossSpawnedPowerup > 3000) {
 						//Spawn a powerup every 3 seconds
-						bossSpawnedOverlay = System.currentTimeMillis();
+						bossSpawnedPowerup = System.currentTimeMillis();
 						
+						powerups.add(new Powerup(bau5.spriteLocation));
+					}
+					if (System.currentTimeMillis() - bossSpawnedBugs > 5000) {
+						//Spawn a bunch of bugs every 5 seconds
+						bossSpawnedBugs = System.currentTimeMillis();
 						
+						bossesMinions.add(new Bug(instance , OC , bossesMinions.size()));
 					}
 				}
 			}
