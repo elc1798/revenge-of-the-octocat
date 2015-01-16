@@ -159,6 +159,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}			
 
 			if (instance.isBossLevel) {
+				instance.isBossLevel = false;
 				boolean allBossesDead = true;
 				for (Boss bau5 : bosses) {
 					if (bau5 != null) {
@@ -187,6 +188,12 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 
 			Rectangle currOCBounds = OC.boundaries();
 
+			for (int i = 0; i < 3; i++) {
+				if (bosses[i] != null && bosses[i].getLives() <= 0) {
+					bosses[i] = null;
+				}
+			}
+			
 			for (Boss bau5 : bosses) {
 				if (bau5 != null) {
 					bau5.move();
@@ -257,6 +264,18 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 							if (b.boundaries().intersects(currSFBounds)) {
 								b.setLives(b.getLives() - s.getDamage());
 								instance.rmAmmo(s.id);
+								break;
+							}
+						}
+					}
+					for (Bug b : bossesMinions) {
+						if (b != null && !b.getType().equals("BUG_GHOST")) {
+							if (b.boundaries().intersects(currSFBounds)) {
+								bossesMinions.set(b.id , null);
+								overlay.rmLifeScreen();
+								instance.rmAmmo(s.id);
+								requireOverlayReset = true;
+								overlayChanged = System.currentTimeMillis();
 								break;
 							}
 						}

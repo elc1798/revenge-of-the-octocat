@@ -194,6 +194,8 @@ public class Controller extends JFrame {
 
 	public void nextLevel() {
 		isBossLevel = false;
+		gfx.cleanupBossMinions();
+		gfx.cleanupPowerups();
 		bgl.loadImage(bkgrndPrefix + bkgrndOrder[level % bkgrndOrder.length]);
 		level++;
 		enemies = null;

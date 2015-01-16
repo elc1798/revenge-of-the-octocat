@@ -18,7 +18,8 @@ public class Boss extends Entity{
 		instance = ctrl;
 		target = prey;
 		id = _id;
-		setLives(100);
+		//setLives(100);
+		setLives(1);
 		setDamage(1);
 		this.setSpeed(prey.getSpeed() - 1);
 		setType("BUG_BOSS");
@@ -106,7 +107,7 @@ public class Boss extends Entity{
 	}
 	
 	public boolean closeToOctocat() {
-		return (Math.abs(this.spriteLocation[0] - target.spriteLocation[0]) < 80) && (Math.abs(this.spriteLocation[1] - target.spriteLocation[1]) < 80);
+		return (Math.abs(this.spriteLocation[0] - target.spriteLocation[0]) < 80) || (Math.abs(this.spriteLocation[1] - target.spriteLocation[1]) < 80);
 	}
 	
 	public void move() {
