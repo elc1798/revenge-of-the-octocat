@@ -11,24 +11,21 @@ public class Boss extends Entity{
 
 	public int id = 0;//This shouldn't really change
 	public int facing = 0;
-	
-	public boolean dead = false;
 
 	public Boss(Controller ctrl , Octocat prey , int _id) {
 		instance = ctrl;
 		target = prey;
 		id = _id;
-		//setLives(100);
-		setLives(1);
-		setDamage(1);
+		super.setLives(50);
+		//super.setLives(1);
+		super.setDamage(1);
 		this.setSpeed(prey.getSpeed() - 1);
-		setType("BUG_BOSS");
-		setSprite("resources/BUG_BOSS_LEFT.png");
+		super.setType("BUG_BOSS");
+		super.setSprite("resources/BUG_BOSS_LEFT.png");
 		super.spriteBounds = new int[]{95 , 95};
 		super.spriteLocation = new int[]{350 , 300};
 		//Octocat will spawn at {600 , 300} at boss level
 		target.spriteLocation = new int[]{600 , 300};
-		dead = false;
 	}
 
 	public int getLives() {
@@ -50,7 +47,6 @@ public class Boss extends Entity{
 		System.out.println(n);
 		super.setLives(n);
 		if (this.getLives() <= 0) {
-			dead = true;
 			//Do death animation here
 		}
 	}

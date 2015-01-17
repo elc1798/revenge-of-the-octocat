@@ -22,7 +22,7 @@ public class Controller extends JFrame {
 	private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
 
-	private int level = 10;
+	private int level = 1;
 	private int stock = 0;
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
@@ -119,11 +119,12 @@ public class Controller extends JFrame {
 		for (Boss bau5 : bosses) {
 			if (bau5 != null && currHitZone != null) {
 				if (bau5.boundaries().intersects(currHitZone)) {
-					bau5.setLives(bau5.getLives() - 1);
-					enemiesHit++;
 					if (enemiesHit >= 3) {
 						currHitZone = null;
 						break;
+					} else {
+						bau5.setLives(bau5.getLives() - 1);
+						enemiesHit++;
 					}
 				}
 			}
@@ -132,12 +133,12 @@ public class Controller extends JFrame {
 		for (Bug b : enemies) {
 			if (b != null && currHitZone != null) {
 				if (b.boundaries().intersects(currHitZone)) {
-					b.setLives(b.getLives() - player.getDamage());
-					//System.out.println(b.getLives());
-					enemiesHit++;
 					if (enemiesHit >= 3) {
 						currHitZone = null;
 						break;
+					} else {
+						b.setLives(b.getLives() - player.getDamage());
+						enemiesHit++;
 					}
 				}
 			}
@@ -146,12 +147,12 @@ public class Controller extends JFrame {
 		for (Bug b : gfx.bossesMinions) {
 			if (b != null && currHitZone != null) {
 				if (b.boundaries().intersects(currHitZone)) {
-					gfx.bossesMinions.set(b.id , null); //One shot!
-					//System.out.println(b.getLives());
-					enemiesHit++;
 					if (enemiesHit >= 3) {
 						currHitZone = null;
 						break;
+					} else {
+						gfx.bossesMinions.set(b.id , null); //One shot!
+						enemiesHit++;
 					}
 				}
 			}
@@ -196,27 +197,36 @@ public class Controller extends JFrame {
 		isBossLevel = false;
 		gfx.cleanupBossMinions();
 		gfx.cleanupPowerups();
-		bgl.loadImage(bkgrndPrefix + bkgrndOrder[level % bkgrndOrder.length]);
 		level++;
-		enemies = null;
-		enemies = new Bug[level * 2];
-		for (int i = 0; i < 3; i++) {
-			bosses[i] = null;
-		}
-		enemiesLeft = enemies.length;
-		for (int i = 0; i < enemies.length; i++) {
-			enemies[i] = new Bug(this , player , i);
-		}
-		gfx.resetPointer(enemies);
-		//Be nice! Give ammo! You'll need it ;)
-		addAmmo();
-		addAmmo();
-		addAmmo();
-		
 		if (level == 11 || level == 21 || level == 31) {
 			isBossLevel = true;
 			bgl.loadImage("resources/BKGRND_BOSS_LEVEL.jpeg");
 			gfx.spawnBoss();
+			enemies = null;
+			enemies = new Bug[level - 3];
+			for (int i = 0; i < enemies.length; i++) {
+				enemies[i] = new Bug(this , player , i);
+			}
+			gfx.resetPointer(enemies);
+			for (int i = 0; i < 5; i++) {
+				addAmmo();
+			}
+		} else {
+			for (int i = 0; i < 3; i++) { //Ensure no bosses spawn
+				bosses[i] = null;
+			}
+			bgl.loadImage(bkgrndPrefix + bkgrndOrder[level % bkgrndOrder.length]);
+			enemies = null;
+			enemies = new Bug[level + 3];
+			enemiesLeft = enemies.length;
+			for (int i = 0; i < enemies.length; i++) {
+				enemies[i] = new Bug(this , player , i);
+			}
+			gfx.resetPointer(enemies);
+			//Be nice! Give ammo! You'll need it ;)
+			addAmmo();
+			addAmmo();
+			addAmmo();
 		}
 		System.out.println("Level " + level);
 		System.gc(); //Cleanup unnecessary RAM addresses
