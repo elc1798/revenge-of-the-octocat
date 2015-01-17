@@ -136,7 +136,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					//Spawn a bunch of bugs every 3.5 seconds
 					bossSpawnedBugs = System.currentTimeMillis();
 					int toSpawn = r.nextInt(2) + 1; //Between 1 - 3 bugs
-					System.out.println(toSpawn);
+					//System.out.println(toSpawn);
 					for (int i = 0; i < toSpawn; i++) {
 						bossesMinions.add(new Bug(instance , OC , minionsSpawned));
 						bossesMinions.get(minionsSpawned).spriteLocation[0] = bau5.spriteLocation[0] + r.nextInt(50) - 25;

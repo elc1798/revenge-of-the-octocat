@@ -12,6 +12,9 @@ public class Boss extends Entity{
 	public int id = 0;//This shouldn't really change
 	public int facing = 0;
 
+	private int preyX = 0;
+	private int preyY = 0;
+	
 	public Boss(Controller ctrl , Octocat prey , int _id) {
 		instance = ctrl;
 		target = prey;
@@ -106,6 +109,10 @@ public class Boss extends Entity{
 		return (Math.abs(this.spriteLocation[0] - target.spriteLocation[0]) < 80) || (Math.abs(this.spriteLocation[1] - target.spriteLocation[1]) < 80);
 	}
 	
+	public boolean octocatPersonalBubble() {
+		return (Math.abs(this.spriteLocation[0] - target.spriteLocation[0]) < 135) || (Math.abs(this.spriteLocation[1] - target.spriteLocation[1]) < 135);
+	}
+	
 	public void move() {
 		
 		//Prevents octocat from zooming past it
@@ -115,22 +122,42 @@ public class Boss extends Entity{
 		//Avoid getting killed by the octocat
 		
 		if (this.spriteLocation[0] < target.spriteLocation[0]) {
-			deltaX = -1;
-			this.setSprite("resources/BUG_BOSS_LEFT.png");
+			if (!octocatPersonalBubble()) {
+				deltaX = -1;
+				this.setSprite("resources/BUG_BOSS_LEFT.png");
+			} else {
+				deltaX = 1;
+				//this.setSprite("resources/BUG_BOSS_RIGHT.png");
+			}
 		} else {
-			deltaX = 1;
-			//this.setSprite("resources/BUG_BOSS_RIGHT.png");
+			if (!octocatPersonalBubble()) {
+				deltaX = 1;
+				//this.setSprite("resources/BUG_BOSS_RIGHT.png");
+			} else {
+				deltaX = -1;
+				this.setSprite("resources/BUG_BOSS_LEFT.png");
+			}
 		}
 		if (this.spriteLocation[1] < target.spriteLocation[1]) {
-			deltaY = -1;
+			if (!octocatPersonalBubble()) {
+				deltaY = -1;
+			} else {
+				deltaY = 1;
+			}
 		} else {
-			deltaY = 1;
+			if (!octocatPersonalBubble()) {
+				deltaY = 1;
+			} else {
+				deltaY = -1;
+			}
 		}
 		
 		//Move:
 		
-		super.spriteLocation[0] += deltaX * getSpeed();
-		super.spriteLocation[1] += deltaY * getSpeed();
+		if (preyX != target.spriteLocation[0] && preyY != target.spriteLocation[1]) {
+			super.spriteLocation[0] += deltaX * getSpeed();
+			super.spriteLocation[1] += deltaY * getSpeed();
+		}
 		
 		//Position correction:
 		if (super.spriteLocation[0] > instance.MAX_X - super.spriteBounds[0]) {
@@ -179,6 +206,10 @@ public class Boss extends Entity{
 		
 		//Update direction
 		this.facing();
+		
+		//Update Octocat's old position
+		preyX = target.spriteLocation[0];
+		preyY = target.spriteLocation[1];
 	}
 	
 	public void paintComponent(Graphics g) {
