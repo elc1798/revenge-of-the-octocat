@@ -33,6 +33,7 @@ public class Controller extends JFrame {
 
 	public int score = 0;
 	public boolean isBossLevel = false;
+	public boolean isPaused = false;
 
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {

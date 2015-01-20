@@ -258,6 +258,8 @@ public class Octocat extends Entity {
 			attackRectSpriteNeedsReset = true;
 			attackRectSpriteChangeTime = System.currentTimeMillis();
 			break;
+		case KeyEvent.VK_P:
+			instance.isPaused = !instance.isPaused;
 		}
 
 	}
