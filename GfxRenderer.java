@@ -63,9 +63,20 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	}
 	
 	public void spawnBoss() {
+	    /*
 		for (int i = 0; i < instance.getLevel() / 10; i++) {
 			bosses[i] = new Boss(instance , OC , i);
 		}
+	    */
+	    minionsSpawned = 0;
+	    switch (instance.getLevel()) {
+	    case 31:
+		bosses[2] = new Boss(instance , OC , 2);
+	    case 21:
+		bosses[1] = new Boss(instance , OC , 1);
+	    case 11:
+		bosses[0] = new Boss(instance , OC , 0);
+	    }
 	}
 	
 	public void checkVictory() {
