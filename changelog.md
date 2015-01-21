@@ -143,3 +143,13 @@ Worked on boss!
 ### Ethan Cheng
 
 Worked on boss level: fixed issues with glitchy movement, cleaned up gfxRenderer
+
+## 1/21/15
+
+### Ethan Cheng
+
+Removed rapid fire where can just hold down the attack key for no delay
+
+### Jesse Elliott
+
+Worked on Boss Bug movement AI
