@@ -72,7 +72,7 @@ public class Controller extends JFrame {
 
 		//Dev mode ;)
 
-		level = 10;
+		//level = 10;
 
 	}
 
