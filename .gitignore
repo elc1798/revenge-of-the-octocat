@@ -18,3 +18,8 @@ RETRIEVE.sh
 #Ethan's Eclipse Injector
 
 INJECT.sh
+
+#Eclipse Handlers
+
+.project
+.externalToolBuilders/
