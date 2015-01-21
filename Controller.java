@@ -70,6 +70,10 @@ public class Controller extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
+		//Dev mode ;)
+
+		level = 10;
+
 	}
 
 	public int getStock() {
