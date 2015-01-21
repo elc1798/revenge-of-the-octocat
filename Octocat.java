@@ -57,6 +57,8 @@ public class Octocat extends Entity {
 	private Controller instance = null;
 	private MeleeAtk attackRect = null;
 	private boolean attackRectSpriteNeedsReset = false;
+	private boolean canMeleeAtk = true;
+	private boolean canShoot = true;
 	private long attackRectSpriteChangeTime;
 
 	//Constructor!
@@ -250,13 +252,19 @@ public class Octocat extends Entity {
 			}
 			break;
 		case KeyEvent.VK_Z:
-			instance.shoot(facing);
+			if (canShoot) {
+				instance.shoot(facing);
+				canShoot = false;
+			}
 			break;
 		case KeyEvent.VK_X:
-			instance.meleeAtk();
-			attackRect.setSprite("resources/MELEEATK_ON.png");
-			attackRectSpriteNeedsReset = true;
-			attackRectSpriteChangeTime = System.currentTimeMillis();
+			if (canMeleeAtk) {
+				instance.meleeAtk();
+				attackRect.setSprite("resources/MELEEATK_ON.png");
+				attackRectSpriteNeedsReset = true;
+				attackRectSpriteChangeTime = System.currentTimeMillis();
+				canMeleeAtk = false;
+			}
 			break;
 		case KeyEvent.VK_P:
 			instance.isPaused = !instance.isPaused;
@@ -344,6 +352,12 @@ public class Octocat extends Entity {
 				System.exit(0);
 				break;
 			}
+			break;
+		case KeyEvent.VK_Z:
+			canShoot = true;
+			break;
+		case KeyEvent.VK_X:
+			canMeleeAtk = true;
 			break;
 		}
 	}
