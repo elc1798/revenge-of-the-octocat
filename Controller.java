@@ -51,7 +51,8 @@ public class Controller extends JFrame {
 		while (!startmenu.startGame) {
 			//Do not run code until game has started
 		}
-		
+		startmenu = null;
+
 		stock = 3;
 		
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
