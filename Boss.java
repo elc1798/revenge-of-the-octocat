@@ -213,13 +213,25 @@ public class Boss extends Entity{
 	for (int i = 1; i < instance.getLevel(); i += 10){
 	    Boss other = instance.getBoss((int)(i/10));
 	    if (other != null && other != this){
-		if (Math.abs(this.spriteLocation[0] - other.spriteLocation[0]) < 30 && Math.abs(this.spriteLocation[1] - other.spriteLocation[1]) < 30 ) {
-		    this.spriteLocation[0] += other.spriteLocation[0] - target.spriteLocation[0];
-		    this.spriteLocation[1] += other.spriteLocation[1] - target.spriteLocation[1];
-		    this.actualBounds = new int[]{spriteLocation[0] + 47 , spriteLocation[1] + 47 };
+		int diffX = this.spriteLocation[0] - other.spriteLocation[0];
+		int diffY = this.spriteLocation[1] - other.spriteLocation[1];
+		if (distanceFromEntity(other) > 30) {
+		} else if (diffX == 0 && diffY == 0){
+		    this.spriteLocation[0] -= 100;
+		    this.spriteLocation[1] -= 100;
+		} else if (diffX == 0){
+		    this.spriteLocation[1] += Math.abs(diffY)/diffY * this.getSpeed();
+		} else if (diffY == 0){
+		    this.spriteLocation[0] += Math.abs(diffX)/diffX * this.getSpeed();
+		} else  {
+		    this.spriteLocation[0] += Math.abs(diffX)/diffX * this.getSpeed(); 
+		    this.spriteLocation[1] += Math.abs(diffY)/diffY * this.getSpeed();
 		}
+		this.actualBounds = new int[]{spriteLocation[0] + 47 , spriteLocation[1] + 47 };
 		}
-	    }
+	}
+
+
 		
 	//Position correction:
 	if (super.spriteLocation[0] > instance.MAX_X - super.spriteBounds[0]) {
