@@ -106,7 +106,7 @@ public class Boss extends Entity{
     }
 	
     public boolean closeToOctocat() {
-	return  distanceFromOctocat() < 130;
+	return  distanceFromOctocat() < 90;
     }
 	
     public boolean octocatPersonalBubble() {

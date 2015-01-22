@@ -104,6 +104,7 @@ Added Powerup.java and necessary changes in Controller.java and GfxRenderer.java
 
 ### Jesse Elliott & Ethan Cheng (In Class/Person)
 
+
 Worked on bug overlap & projectiles
 
 ### Jesse Elliott
@@ -153,3 +154,7 @@ Removed rapid fire where can just hold down the attack key for no delay
 ### Jesse Elliott
 
 Worked on Boss Bug movement AI
+
+### Jesse Elliott
+    
+Started removal of Boss Overlap (buggy stages) partially removed inability to hit the boss except from the lower right corner.
