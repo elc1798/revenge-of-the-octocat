@@ -24,4 +24,4 @@ Movement will be controlled with the arrow keys and attacking will use the z and
  - master : Main branch for latest alpha test release : https://github.com/elc1798/revenge-of-the-octocat
  - Stable-0.01a : First, stable alpha version : https://github.com/elc1798/revenge-of-the-octocat/tree/Stable-0.01a
  - Stable-0.02a : Second stable alpha version : https://github.com/elc1798/revenge-of-the-octocat/tree/Stable-0.02a
-
+ - Stable-0.03a : Third stable alpha version : https://github.com/elc1798/revenge-of-the-octocat/tree/Stable-0.03a
