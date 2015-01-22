@@ -47,8 +47,13 @@ public class Controller extends JFrame {
 
 	public Controller() {
 
+		startmenu = new SplashScreen();
+		while (!startmenu.startGame) {
+			//Do not run code until game has started
+		}
+		
 		stock = 3;
-
+		
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
 		enemies = new Bug[3];

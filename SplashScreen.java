@@ -1,21 +1,13 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
 
 @SuppressWarnings("serial")
-public class SplashScreen extends JPanel implements Runnable , ActionListener {
+public class SplashScreen extends JPanel implements Runnable , MouseListener {
 
-	private JButton startButton;
 	private BackGroundLoader b;
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
@@ -27,9 +19,8 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 
 	public SplashScreen() {
 		startGame = false; //Just to clarify
-		b = new BackGroundLoader("SPLASHSCREEN.png");
-		startButton.addActionListener(this);
-		
+		b = new BackGroundLoader("resources/SPLASHSCREEN.png");
+
 	}
 
 	@Override
@@ -44,14 +35,6 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		b.paintComponent(g);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		if (arg0.getSource() == startButton) {
-			startGame = true;
-		}
 	}
 
 	@Override
@@ -73,7 +56,7 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 			try {
 				Thread.sleep(sleepTime);
 			} catch(InterruptedException ie) {
-				System.out.println("Interruption during Thread.sleep, SplashScreen.java Line 58");
+				System.out.println("Interruption during Thread.sleep, SplashScreen.java Line 74");
 				System.out.println("Sending SIGTERM to process...");
 				System.exit(0);
 			}
@@ -81,6 +64,40 @@ public class SplashScreen extends JPanel implements Runnable , ActionListener {
 			prevTime = System.currentTimeMillis();
 
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		int clickX = e.getX();
+		int clickY = e.getY();
+		if (clickX < 500 && clickY > 400) {
+			startGame = true;
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
