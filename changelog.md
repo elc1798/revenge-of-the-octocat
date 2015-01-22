@@ -169,4 +169,4 @@ Worked on removing glitch where rapid fire still works on some keyboards
 
 ### Jesse Elliot
 
-Removed Boss overlapping
+Removed Boss overlapping and bugginess and inability to hit boss except from lower right corner.
