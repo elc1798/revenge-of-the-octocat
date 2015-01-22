@@ -134,13 +134,13 @@ Began working on programmatical aspect of splash screen
 
 ## 1/15/15
 
-### Ethan Cheng
+### Ethan Cheng and Jesse Elliott
 
 Worked on boss!
 
 ## 1/16/15
 
-### Ethan Cheng
+### Ethan Cheng and Jesse Elliott
 
 Worked on boss level: fixed issues with glitchy movement, cleaned up gfxRenderer
 
