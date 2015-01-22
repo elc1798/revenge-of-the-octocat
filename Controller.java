@@ -29,7 +29,7 @@ public class Controller extends JFrame {
 	private Random r = new Random();
 	private String bkgrndPrefix = "resources/BKGRND_";
 	private String[] bkgrndOrder = new String[]{"ENTRY.jpg" , "ROOTS.jpg" , "MOBO.jpg" , "HUB.jpg" , "NET.jpg"};
-	//private SplashScreen startmenu = null;
+	private SplashScreen startmenu = null;
 
 	public int score = 0;
 	public boolean isBossLevel = false;

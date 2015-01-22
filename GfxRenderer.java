@@ -272,13 +272,15 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (OC.getLives() <= 0) {
-			String msg = "Game over! Score: " + instance.score;
-			Font small = new Font("Helvetica", Font.BOLD, 28);
-			FontMetrics metr = this.getFontMetrics(small);
-			setBackground(Color.DARK_GRAY);
+			String msg = "You have died... Score: " + instance.score;
+			Font f = new Font("Helvetica", Font.BOLD, 28);
+			FontMetrics metr = this.getFontMetrics(f);
+			setBackground(Color.BLACK);
+			bgl.loadImage("resources/DEATH_SCREEN.jpg");
+			bgl.paintGameOver(g);
 			g.setColor(Color.white);
-			g.setFont(small);
-			g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y / 2);
+			g.setFont(f);
+			g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y - 75);
 			alive = false;
 			instance.stopKeyListener();
 		} else {

@@ -25,4 +25,8 @@ public class BackGroundLoader {
 		g.drawImage(bkgrnd , 0 , 0 , 950 , 600 , null);
 	}
 	
+	public void paintGameOver(Graphics g) {
+		g.drawImage(bkgrnd , 175 , 0 , 600 , 600 , null);
+	}
+	
 }
