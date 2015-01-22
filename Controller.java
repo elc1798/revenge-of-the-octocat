@@ -22,7 +22,7 @@ public class Controller extends JFrame {
 	private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
 
-	private int level = 1;
+	private int level = 20;
 	private int stock = 0;
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
@@ -83,7 +83,10 @@ public class Controller extends JFrame {
 	public int getLevel() {
 		return level;
 	}
-
+        
+    public Boss getBoss(int i){
+	return bosses[i];
+    }
 	public void addAmmo() {
 		if (stock < 5) {
 			stock++;

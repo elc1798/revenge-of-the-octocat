@@ -189,6 +189,8 @@ public class Boss extends Entity{
 		super.spriteLocation[0] = target.spriteLocation[0] + 100;
 		super.spriteLocation[1] = target.spriteLocation[1] + 100;
 	    }
+
+
 	    //Update speeds
 	    if (this.spriteLocation[0] < target.spriteLocation[0]) {
 		deltaX = 1;
@@ -201,6 +203,17 @@ public class Boss extends Entity{
 		deltaY = -1;
 	    }
 	}
+
+	    //Avoid Overlapping other Bosses
+	    for (int i = 1; i < instance.getLevel(); i += 10){
+		Boss other = instance.getBoss((int)(i/10));
+		if (other != null && other != this){
+		if (Math.abs(this.spriteLocation[0] - other.spriteLocation[0]) < 30 && Math.abs(this.spriteLocation[1] - other.spriteLocation[1]) < 30 ) {
+		    this.spriteLocation[0] += other.spriteLocation[0] - target.spriteLocation[0];
+		    this.spriteLocation[1] += other.spriteLocation[1] - target.spriteLocation[1];
+		}
+		}
+	    }
 		
 	//Position correction:
 	if (super.spriteLocation[0] > instance.MAX_X - super.spriteBounds[0]) {
