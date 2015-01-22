@@ -11,7 +11,7 @@ public class Boss extends Entity{
 
     public int id = 0;//This shouldn't really change
     public int facing = 0;
-
+    private int[] actualBounds = new int[]{0,0};
     private int preyX = 0;
     private int preyY = 0;
 	
@@ -27,6 +27,7 @@ public class Boss extends Entity{
 	super.setSprite("resources/BUG_BOSS_LEFT.png");
 	super.spriteBounds = new int[]{95 , 95};
 	super.spriteLocation = new int[]{350 , 300};
+	this.actualBounds = new int[]{spriteLocation[0] + 47 , spriteLocation[1] + 47 };
 	//Octocat will spawn at {600 , 300} at boss level
 	target.spriteLocation = new int[]{600 , 300};
     }
@@ -112,13 +113,15 @@ public class Boss extends Entity{
     public boolean octocatPersonalBubble() {
 	return distanceFromOctocat() < 200;
     }
-
+    public int distanceFromEntity(Entity other){
+	return (int)(Math.sqrt(Math.pow(this.spriteLocation[0]-other.spriteLocation[0],2)+Math.pow(this.spriteLocation[1]-other.spriteLocation[1],2)));
+    }
     public int distanceFromOctocat(){
-	return (int)(Math.sqrt(Math.pow(this.spriteLocation[0]-target.spriteLocation[0],2)+Math.pow(this.spriteLocation[1]-target.spriteLocation[1],2)));
+	return (int)(Math.sqrt(Math.pow(this.actualBounds[0]-target.actualBounds[0],2)+Math.pow(this.actualBounds[1]-target.actualBounds[1],2)));
     }
 
     public void move() {
-		
+	
 	//Prevents octocat from zooming past it
 		
 	this.setSpeed(target.getSpeed() - 1);
@@ -169,7 +172,9 @@ public class Boss extends Entity{
 		
 	super.spriteLocation[0] += deltaX * getSpeed();
 	super.spriteLocation[1] += deltaY * getSpeed();
-		
+	
+	this.actualBounds = new int[]{spriteLocation[0] + 47 , spriteLocation[1] + 47 };
+
 	//Teleport
 	if (closeToOctocat()) { //If the Mega-Bug is too close, it will hop over the Octocat and run :)
 	    if (super.spriteLocation[0] > target.spriteLocation[0] && super.spriteLocation[1] < target.spriteLocation[1]) {
@@ -189,7 +194,7 @@ public class Boss extends Entity{
 		super.spriteLocation[0] = target.spriteLocation[0] + 100;
 		super.spriteLocation[1] = target.spriteLocation[1] + 100;
 	    }
-
+	    this.actualBounds = new int[]{spriteLocation[0] + 47 , spriteLocation[1] + 47 };
 
 	    //Update speeds
 	    if (this.spriteLocation[0] < target.spriteLocation[0]) {
@@ -205,12 +210,13 @@ public class Boss extends Entity{
 	}
 
 	    //Avoid Overlapping other Bosses
-	    for (int i = 1; i < instance.getLevel(); i += 10){
-		Boss other = instance.getBoss((int)(i/10));
-		if (other != null && other != this){
+	for (int i = 1; i < instance.getLevel(); i += 10){
+	    Boss other = instance.getBoss((int)(i/10));
+	    if (other != null && other != this){
 		if (Math.abs(this.spriteLocation[0] - other.spriteLocation[0]) < 30 && Math.abs(this.spriteLocation[1] - other.spriteLocation[1]) < 30 ) {
 		    this.spriteLocation[0] += other.spriteLocation[0] - target.spriteLocation[0];
 		    this.spriteLocation[1] += other.spriteLocation[1] - target.spriteLocation[1];
+		    this.actualBounds = new int[]{spriteLocation[0] + 47 , spriteLocation[1] + 47 };
 		}
 		}
 	    }
