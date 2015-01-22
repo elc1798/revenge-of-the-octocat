@@ -158,3 +158,15 @@ Worked on Boss Bug movement AI
 ### Jesse Elliott
     
 Started removal of Boss Overlap (buggy stages) partially removed inability to hit the boss except from the lower right corner.
+
+## 1/22/15
+
+Created new stable branch
+
+### Ethan Cheng
+
+Worked on removing glitch where rapid fire still works on some keyboards
+
+### Jesse Elliot
+
+Removed Boss overlapping
