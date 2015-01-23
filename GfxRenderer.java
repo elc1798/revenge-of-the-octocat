@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -38,6 +39,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	private long bossSpawnedBugs = System.currentTimeMillis();
 	private int minionsSpawned = 0;
 	private Random r = new Random();
+	private boolean toggledSplash = false;
 
 	public GfxRenderer(Octocat session , BackGroundLoader b , Bug[] bugs , Segfault[] sfs , Controller _instance , Boss[] _bosses) {
 		OC = session;
@@ -50,17 +52,23 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	}
 
 	public void splashScreen() {
+		instance.setPreferredSize(new Dimension(950 , 600));
 		bgl.loadImage("resources/SPLASHSCREEN.png");
 		startGame = false;
 	}
 
 	public boolean hasStarted() {
-		bgl.loadImage("resources/BKGRND_ENTRY.jpg");
 		return startGame;
 	}
 
 	public void startSession() {
-		startGame = true;
+		if (!toggledSplash) {
+			bgl.loadImage("resources/INSTRUCTIONS.png");
+			toggledSplash = true;
+		} else {
+			bgl.loadImage("resources/BKGRND_ENTRY.jpg");
+			startGame = true;
+		}
 	}
 
 	public void resetPointer(Bug[] bugPointer) {
@@ -298,38 +306,30 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				bgl.paintGameOver(g);
 				g.setColor(Color.white);
 				g.setFont(f);
-				g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y - 75);
+				g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y + 25);
 				alive = false;
 				instance.stopKeyListener();
 			} else {
+				setBackground(Color.BLACK);
 				bgl.paintComponent(g);
 				OC.paintComponent(g);
-				for (Segfault s : projectiles) {
-					if (s != null) {
-						s.paintComponent(g);
-					}
-				}
-				for (Boss bau5 : bosses) {
-					if (bau5 != null) {
-						bau5.paintComponent(g);
-					}
-				}
-				for (Bug b : bossesMinions) {
-					if (b != null) {
-						b.paintComponent(g);
-					}
-				}
-				for (Bug b : enemies) {
-					if (b != null) {
-						b.paintComponent(g);
-					}
-				}
-				for (Powerup p : powerups) {
-					if (p != null) {
-						p.paintComponent(g);
-					}
-				}
+				for (Segfault s : projectiles) { if (s != null) { s.paintComponent(g); } }
+				for (Boss bau5 : bosses) { if (bau5 != null) { bau5.paintComponent(g); } }
+				for (Bug b : bossesMinions) { if (b != null) { b.paintComponent(g); } }
+				for (Bug b : enemies) { if (b != null) { b.paintComponent(g); }	}
+				for (Powerup p : powerups) { if (p != null) { p.paintComponent(g); } }
 				overlay.paintComponent(g);
+				Font f = new Font("Helvetica", Font.BOLD, 28);
+				g.setColor(Color.white);
+				g.setFont(f);
+				String score_display = "Score: " + instance.score;
+				String life_display = "Lives: " + OC.getLives();
+				String ammo_display = "Ammo: " + instance.getStock() + "/5";
+				String stat_display = "Speed/Damage: " + OC.getSpeed() + "/" + OC.getDamage();
+				g.drawString(score_display , 0 , 620);
+				g.drawString(life_display , instance.MAX_X / 2 , 620);
+				g.drawString(ammo_display , 0 , 660);
+				g.drawString(stat_display , instance.MAX_X / 2 , 660);
 			}
 		}
 	}

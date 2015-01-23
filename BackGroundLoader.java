@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 
@@ -16,7 +15,7 @@ public class BackGroundLoader {
 	
 	public void loadImage(String PIC) {
 		loader = new ImageIcon(PIC);
-		System.out.println("Found " + PIC + "? " + new File(PIC).exists() + "");
+//		System.out.println("Found " + PIC + "? " + new File(PIC).exists() + "");
 		bkgrnd = loader.getImage();
 		loader = null;
 	}
@@ -26,7 +25,7 @@ public class BackGroundLoader {
 	}
 	
 	public void paintGameOver(Graphics g) {
-		g.drawImage(bkgrnd , 175 , 0 , 600 , 600 , null);
+		g.drawImage(bkgrnd , 125 , 0 , 700 , 700 , null);
 	}
 	
 }

@@ -165,7 +165,7 @@ Created new stable branch
 
 ### Ethan Cheng
 
-Worked on removing glitch where rapid fire still works on some keyboards
+Worked on removing glitch where rapid fire still works on some keyboards, finished splash screen
 
 ### Jesse Elliot
 
