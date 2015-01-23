@@ -29,9 +29,9 @@ public class Powerup extends Entity {
 		} else if (3 <= choice && choice <= 7) {
 			super.setSprite("resources/POWERUP_LIFE.png");
 			super.setType("POWERUP_LIFE");
-		} else if (8 <= choice && choice <= 10) {
+		} else if (8 <= choice && choice <= 12) {
 			super.setSprite("resources/POWERUP_DAMAGE.png");
-		} else if (11 <= choice && choice <= 13) {
+		} else if (choice == 13) {
 			super.setSprite("resources/POWERUP_AMMO.png");
 		} else {
 			System.out.println("Error: Invalid ID for powerup. Exitting...");

@@ -228,7 +228,7 @@ public class Controller extends JFrame {
 	}
 
 	public void spawnPowerup(int id) {
-		if (r.nextInt(100) < 25) {
+		if (r.nextInt(100) < 40) {
 			gfx.powerups.add(new Powerup(enemies[id].spriteLocation));
 		}
 	}
