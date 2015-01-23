@@ -67,7 +67,7 @@ public class Octocat extends Entity {
 		instance = ctrl;
 		setLives(3);
 		//Dev-mode:
-		setLives(Integer.MAX_VALUE / 2);
+		//setLives(Integer.MAX_VALUE / 2);
 		setDamage(1);
 		setSpeed(2);
 		setType("OCTOCAT_HEALTHY");
