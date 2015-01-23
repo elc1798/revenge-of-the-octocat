@@ -5,7 +5,9 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import javax.swing.JFrame;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 @SuppressWarnings("serial")
 public class Controller extends JFrame {
@@ -21,6 +23,10 @@ public class Controller extends JFrame {
 	private Boss[] bosses;
 	private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
+
+	private static AudioInputStream audioIn = null;
+	private static Clip musicPlayer = null;
+
 
 	private int level = 1;
 	private int stock = 0;
@@ -56,6 +62,16 @@ public class Controller extends JFrame {
 	}
 
 	public Controller() {
+
+		try {
+			audioIn = AudioSystem.getAudioInputStream(Controller.class.getResource("resources/ElectromanAdventures.wav"));
+			musicPlayer = AudioSystem.getClip();
+			musicPlayer.open(audioIn);
+			musicPlayer.start();
+			musicPlayer.loop(Clip.LOOP_CONTINUOUSLY);
+		} catch(Exception e) {
+			System.out.println("Music failed...");
+		}
 
 		stock = 3;
 
