@@ -45,8 +45,11 @@ public class Controller extends JFrame {
 			if (gfx.hasStarted()) {
 				player.keyPressed(e);
 			} else {
-				if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_SPACE) {
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					gfx.startSession();
+					if (gfx.hasStarted()) {
+						resizeToGamePrefs();
+					}
 				}
 			}
 		}
@@ -81,6 +84,14 @@ public class Controller extends JFrame {
 
 	}
 
+	public void resizeToGamePrefs() {
+		setPreferredSize(new Dimension(950 , 690));
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+		setLocationRelativeTo(null);
+	}
+	
 	public int getStock() {
 		return stock;
 	}
