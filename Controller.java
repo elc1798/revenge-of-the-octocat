@@ -22,14 +22,13 @@ public class Controller extends JFrame {
 	private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
 
-	private int level = 20;
+	private int level = 1;
 	private int stock = 0;
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
 	private Random r = new Random();
 	private String bkgrndPrefix = "resources/BKGRND_";
 	private String[] bkgrndOrder = new String[]{"ENTRY.jpg" , "ROOTS.jpg" , "MOBO.jpg" , "HUB.jpg" , "NET.jpg"};
-	private SplashScreen startmenu = null;
 
 	public int score = 0;
 	public boolean isBossLevel = false;
@@ -37,23 +36,23 @@ public class Controller extends JFrame {
 
 	private class inputAdapter extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
-			player.keyReleased(e);
+			if (gfx.hasStarted()) {
+				player.keyReleased(e);
+			}
 		}
 
 		public void keyPressed(KeyEvent e) {
-			player.keyPressed(e);
+			if (gfx.hasStarted()) {
+				player.keyPressed(e);
+			} else {
+				if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_SPACE) {
+					gfx.startSession();
+				}
+			}
 		}
 	}
 
 	public Controller() {
-
-		startmenu = new SplashScreen();
-
-		while (!startmenu.startGame) {
-			//Do not run code until game has started
-		}
-
-		startmenu = null;
 
 		stock = 3;
 		
@@ -77,10 +76,8 @@ public class Controller extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-
-		//Dev mode ;)
-
-		//level = 10;
+		
+		gfx.splashScreen();
 
 	}
 
