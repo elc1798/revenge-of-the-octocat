@@ -48,9 +48,11 @@ public class Controller extends JFrame {
 	public Controller() {
 
 		startmenu = new SplashScreen();
+
 		while (!startmenu.startGame) {
 			//Do not run code until game has started
 		}
+
 		startmenu = null;
 
 		stock = 3;
