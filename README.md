@@ -14,9 +14,9 @@ Movement will be controlled with the arrow keys and attacking will use the z and
  - [X] controls (arrow keys and z/x, enemy random/ordered movement)
  - [X] collision/attack detection (overlapping panels/sprites)
  - [X] ammo system (probably simple at this point, but definitely an embelishment.)
- - [ ] Storyline
- - [ ] Splash Screen
- - [ ] Art!
+ - [?] Storyline
+ - [X] Splash Screen
+ - [X] Art!
 
 
 ###Github Branches:
