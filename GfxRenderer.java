@@ -327,10 +327,12 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 					String life_display = "Lives: " + OC.getLives();
 					String ammo_display = "Ammo: " + instance.getStock() + "/5";
 					String stat_display = "Speed/Damage: " + OC.getSpeed() + "/" + OC.getDamage();
+					String stage_num = "Stage " + instance.getLevel();
 					g.drawString(score_display , 0 , 620);
 					g.drawString(life_display , instance.MAX_X / 2 , 620);
 					g.drawString(ammo_display , 0 , 660);
 					g.drawString(stat_display , instance.MAX_X / 2 , 660);
+					g.drawString(stage_num , 10 , 40);
 				}
 			}
 		}
