@@ -22,7 +22,7 @@ public class Controller extends JFrame {
 	private Segfault[] projectiles = new Segfault[5];
 	private inputAdapter userIn = new inputAdapter();
 
-	private int level = 1;
+	private int level = 31;
 	private int stock = 0;
 	private int enemiesLeft = 0;
 	private Rectangle currHitZone = null;
@@ -58,7 +58,7 @@ public class Controller extends JFrame {
 	public Controller() {
 
 		stock = 3;
-		
+
 		bgl = new BackGroundLoader("resources/BKGRND_ENTRY.jpg");
 		player = new Octocat(this);
 		enemies = new Bug[3];
@@ -79,7 +79,7 @@ public class Controller extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+
 		gfx.splashScreen();
 
 	}
@@ -91,7 +91,15 @@ public class Controller extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 	}
-	
+
+	public void resizeToStatic() {
+		setPreferredSize(new Dimension(950 , 600));
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+		setLocationRelativeTo(null);
+	}
+
 	public int getStock() {
 		return stock;
 	}
@@ -99,10 +107,10 @@ public class Controller extends JFrame {
 	public int getLevel() {
 		return level;
 	}
-        
-    public Boss getBoss(int i){
-	return bosses[i];
-    }
+
+	public Boss getBoss(int i){
+		return bosses[i];
+	}
 	public void addAmmo() {
 		if (stock < 5) {
 			stock++;
@@ -137,9 +145,9 @@ public class Controller extends JFrame {
 		 */
 
 		currHitZone = new Rectangle(player.spriteLocation[0] - 25 , player.spriteLocation[1] - 25 , player.spriteBounds[0] + 50 , player.spriteBounds[1] + 50);
-		
+
 		int enemiesHit = 0;
-		
+
 		for (Boss bau5 : bosses) {
 			if (bau5 != null && currHitZone != null) {
 				if (bau5.boundaries().intersects(currHitZone)) {
@@ -153,7 +161,7 @@ public class Controller extends JFrame {
 				}
 			}
 		}
-		
+
 		for (Bug b : enemies) {
 			if (b != null && currHitZone != null) {
 				if (b.boundaries().intersects(currHitZone)) {
@@ -167,7 +175,7 @@ public class Controller extends JFrame {
 				}
 			}
 		}
-		
+
 		for (Bug b : gfx.bossesMinions) {
 			if (b != null && currHitZone != null) {
 				if (b.boundaries().intersects(currHitZone)) {

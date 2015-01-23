@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -7,10 +6,9 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JPanel;
-
-import java.util.Random;
 
 @SuppressWarnings("serial")
 public class GfxRenderer extends JPanel implements Runnable , ActionListener {
@@ -52,7 +50,6 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	}
 
 	public void splashScreen() {
-		instance.setPreferredSize(new Dimension(950 , 600));
 		bgl.loadImage("resources/SPLASHSCREEN.png");
 		startGame = false;
 	}
@@ -68,6 +65,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		} else {
 			bgl.loadImage("resources/BKGRND_ENTRY.jpg");
 			startGame = true;
+			instance.resizeToGamePrefs();
 		}
 	}
 
@@ -297,7 +295,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		if (!startGame) {
 			bgl.paintComponent(g);
 		} else {
-			if (OC.getLives() <= 0) {
+			if (OC != null && OC.getLives() <= 0) {
 				String msg = "You have died... Score: " + instance.score;
 				Font f = new Font("Helvetica", Font.BOLD, 28);
 				FontMetrics metr = this.getFontMetrics(f);
@@ -312,24 +310,28 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			} else {
 				setBackground(Color.BLACK);
 				bgl.paintComponent(g);
-				OC.paintComponent(g);
-				for (Segfault s : projectiles) { if (s != null) { s.paintComponent(g); } }
-				for (Boss bau5 : bosses) { if (bau5 != null) { bau5.paintComponent(g); } }
-				for (Bug b : bossesMinions) { if (b != null) { b.paintComponent(g); } }
-				for (Bug b : enemies) { if (b != null) { b.paintComponent(g); }	}
-				for (Powerup p : powerups) { if (p != null) { p.paintComponent(g); } }
-				overlay.paintComponent(g);
-				Font f = new Font("Helvetica", Font.BOLD, 28);
-				g.setColor(Color.white);
-				g.setFont(f);
-				String score_display = "Score: " + instance.score;
-				String life_display = "Lives: " + OC.getLives();
-				String ammo_display = "Ammo: " + instance.getStock() + "/5";
-				String stat_display = "Speed/Damage: " + OC.getSpeed() + "/" + OC.getDamage();
-				g.drawString(score_display , 0 , 620);
-				g.drawString(life_display , instance.MAX_X / 2 , 620);
-				g.drawString(ammo_display , 0 , 660);
-				g.drawString(stat_display , instance.MAX_X / 2 , 660);
+				if (OC != null) {OC.paintComponent(g);}
+				if (instance.getLevel() < 32) {
+					for (Segfault s : projectiles) { if (s != null) { s.paintComponent(g); } }
+					for (Boss bau5 : bosses) { if (bau5 != null) { bau5.paintComponent(g); } }
+					for (Bug b : bossesMinions) { if (b != null) { b.paintComponent(g); } }
+					for (Bug b : enemies) { if (b != null) { b.paintComponent(g); }	}
+					for (Powerup p : powerups) { if (p != null) { p.paintComponent(g); } }
+					overlay.paintComponent(g);
+				}
+				if (OC != null) {
+					Font f = new Font("Helvetica", Font.BOLD, 28);
+					g.setColor(Color.white);
+					g.setFont(f);
+					String score_display = "Score: " + instance.score;
+					String life_display = "Lives: " + OC.getLives();
+					String ammo_display = "Ammo: " + instance.getStock() + "/5";
+					String stat_display = "Speed/Damage: " + OC.getSpeed() + "/" + OC.getDamage();
+					g.drawString(score_display , 0 , 620);
+					g.drawString(life_display , instance.MAX_X / 2 , 620);
+					g.drawString(ammo_display , 0 , 660);
+					g.drawString(stat_display , instance.MAX_X / 2 , 660);
+				}
 			}
 		}
 	}
@@ -346,7 +348,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 
 		prevTime = System.currentTimeMillis();
 
-		while (alive) {
+		while (alive && instance.getLevel() < 32) {
 
 			if (!startGame) {
 
@@ -383,6 +385,11 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			prevTime = System.currentTimeMillis();
 
 		}
+
+		bgl.loadImage("resources/BKGRND_VICTORY.png");
+		OC = null;
+		if (instance.getLevel() >= 32) {instance.resizeToStatic();}
+		repaint();
 
 	}
 
