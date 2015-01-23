@@ -386,10 +386,12 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 
 		}
 
-		bgl.loadImage("resources/BKGRND_VICTORY.png");
-		OC = null;
-		if (instance.getLevel() >= 32) {instance.resizeToStatic();}
-		repaint();
+		if (instance.getLevel() >= 32) {
+			bgl.loadImage("resources/BKGRND_VICTORY.png");
+			OC = null;
+			instance.resizeToStatic();
+			repaint();
+		}
 
 	}
 
