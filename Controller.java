@@ -7,7 +7,9 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 @SuppressWarnings("serial")
 public class Controller extends JFrame {
@@ -64,8 +66,10 @@ public class Controller extends JFrame {
 	public Controller() {
 
 		try {
-			audioIn = AudioSystem.getAudioInputStream(Controller.class.getResource("resources/ElectromanAdventures.wav"));
-			musicPlayer = AudioSystem.getClip();
+			audioIn = AudioSystem.getAudioInputStream(this.getClass().getResource("resources/ElectromanAdventures.wav"));
+			AudioFormat format = audioIn.getFormat();
+			DataLine.Info info = new DataLine.Info(Clip.class, format);
+			musicPlayer = (Clip)AudioSystem.getLine(info);
 			musicPlayer.open(audioIn);
 			musicPlayer.start();
 			musicPlayer.loop(Clip.LOOP_CONTINUOUSLY);
