@@ -53,6 +53,7 @@ public class Entity {
 		type = _type;
 	}
 	public void setSprite(String PIC) {
+		PIC = PIC.replace("/" , Controller.DIRMARKER);
 		if (new File(PIC).exists()) {
 			loader = new ImageIcon(PIC);
 			sprite = loader.getImage();

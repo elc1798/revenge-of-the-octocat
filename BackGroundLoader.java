@@ -14,6 +14,7 @@ public class BackGroundLoader {
 	}
 	
 	public void loadImage(String PIC) {
+		PIC = PIC.replace("/" , Controller.DIRMARKER);
 		loader = new ImageIcon(PIC);
 //		System.out.println("Found " + PIC + "? " + new File(PIC).exists() + "");
 		bkgrnd = loader.getImage();

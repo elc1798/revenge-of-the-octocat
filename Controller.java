@@ -13,6 +13,9 @@ import javax.sound.sampled.DataLine;
 
 @SuppressWarnings("serial")
 public class Controller extends JFrame {
+	
+	public static final String DIRMARKER	= System.getProperty("file.separator");
+	
 	public final int MAX_X = 950;
 	public final int MAX_Y = 600;
 	public final int MIN_X = 0;
@@ -66,7 +69,8 @@ public class Controller extends JFrame {
 	public Controller() {
 
 		try {
-			audioIn = AudioSystem.getAudioInputStream(this.getClass().getResource("resources/ElectromanAdventures.wav"));
+			String path = "resources" + DIRMARKER + "ElectromanAdventures.wav";
+			audioIn = AudioSystem.getAudioInputStream(this.getClass().getResource(path));
 			AudioFormat format = audioIn.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 			musicPlayer = (Clip)AudioSystem.getLine(info);
