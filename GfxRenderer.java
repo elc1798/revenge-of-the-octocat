@@ -24,15 +24,16 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 
 	public ArrayList<Powerup> powerups = new ArrayList<Powerup>(); //Made public so Controller can have access
 	public ArrayList<Bug> bossesMinions = new ArrayList<Bug>();
-	
+
 	private final int DELAY = 24;
 	private Thread animus; //Animation driver
 	private boolean alive = true;
 	private boolean requireNextLevel = false;
-	
+	private boolean startGame = false;
+
 	public boolean requireOverlayReset = false;
 	public long overlayChanged = System.currentTimeMillis();
-	
+
 	private long bossSpawnedPowerup = System.currentTimeMillis();
 	private long bossSpawnedBugs = System.currentTimeMillis();
 	private int minionsSpawned = 0;
@@ -48,6 +49,20 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		bosses = _bosses;
 	}
 
+	public void splashScreen() {
+		bgl.loadImage("resources/SPLASHSCREEN.png");
+		startGame = false;
+	}
+
+	public boolean hasStarted() {
+		bgl.loadImage("resources/BKGRND_ENTRY.jpg");
+		return startGame;
+	}
+
+	public void startSession() {
+		startGame = true;
+	}
+
 	public void resetPointer(Bug[] bugPointer) {
 		enemies = bugPointer;
 	}
@@ -61,24 +76,24 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 		bossesMinions = null;
 		bossesMinions = new ArrayList<Bug>();
 	}
-	
+
 	public void spawnBoss() {
-	    /*
+		/*
 		for (int i = 0; i < instance.getLevel() / 10; i++) {
 			bosses[i] = new Boss(instance , OC , i);
 		}
-	    */
-	    minionsSpawned = 0;
-	    switch (instance.getLevel()) {
-	    case 31:
-		bosses[2] = new Boss(instance , OC , 2);
-	    case 21:
-		bosses[1] = new Boss(instance , OC , 1);
-	    case 11:
-		bosses[0] = new Boss(instance , OC , 0);
-	    }
+		 */
+		minionsSpawned = 0;
+		switch (instance.getLevel()) {
+		case 31:
+			bosses[2] = new Boss(instance , OC , 2);
+		case 21:
+			bosses[1] = new Boss(instance , OC , 1);
+		case 11:
+			bosses[0] = new Boss(instance , OC , 0);
+		}
 	}
-	
+
 	public void checkVictory() {
 		if (!instance.isBossLevel) {
 			if (instance.numBugs() <= 0) {
@@ -111,7 +126,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	public void checkOverlays() {
 		if (requireOverlayReset && System.currentTimeMillis() - overlayChanged > 3000) {
 			overlay.resetOverlay();
@@ -127,7 +142,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	public void updateBosses() {
 		for (int i = 0; i < 3; i++) {
 			if (bosses[i] != null && bosses[i].getLives() <= 0) {
@@ -140,7 +155,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 				if (System.currentTimeMillis() - bossSpawnedPowerup > 3000) {
 					//Spawn a powerup every 3 seconds
 					bossSpawnedPowerup = System.currentTimeMillis();
-					
+
 					powerups.add(new Powerup(bau5.spriteLocation.clone()));
 				}
 				if (System.currentTimeMillis() - bossSpawnedBugs > 3500) {
@@ -158,7 +173,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	public void updateMinions(Rectangle currOCBounds) {
 		for (Bug b : bossesMinions) {
 			if (b != null && !b.getType().equals("BUG_GHOST")) {
@@ -175,7 +190,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	public void updateBugs(Rectangle currOCBounds) {
 		for (Bug b : enemies) {
 			if (b != null && !b.getType().equals("BUG_GHOST")) {
@@ -193,7 +208,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	public void updateSegfaults() {
 		for (Segfault s : projectiles) {
 			if (s != null) {
@@ -243,7 +258,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	public void updatePowerups(Rectangle currOCBounds) {
 		for (int i = 0; i < powerups.size(); i++) {//I need the index, so use basic for loop instead of for(Powerup p : powerups)
 			if (powerups.get(i) != null) {
@@ -259,7 +274,7 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public void addNotify() {
 		super.addNotify();
@@ -271,50 +286,54 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (OC.getLives() <= 0) {
-			String msg = "You have died... Score: " + instance.score;
-			Font f = new Font("Helvetica", Font.BOLD, 28);
-			FontMetrics metr = this.getFontMetrics(f);
-			setBackground(Color.BLACK);
-			bgl.loadImage("resources/DEATH_SCREEN.jpg");
-			bgl.paintGameOver(g);
-			g.setColor(Color.white);
-			g.setFont(f);
-			g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y - 75);
-			alive = false;
-			instance.stopKeyListener();
-		} else {
+		if (!startGame) {
 			bgl.paintComponent(g);
-			OC.paintComponent(g);
-			for (Segfault s : projectiles) {
-				if (s != null) {
-					s.paintComponent(g);
+		} else {
+			if (OC.getLives() <= 0) {
+				String msg = "You have died... Score: " + instance.score;
+				Font f = new Font("Helvetica", Font.BOLD, 28);
+				FontMetrics metr = this.getFontMetrics(f);
+				setBackground(Color.BLACK);
+				bgl.loadImage("resources/DEATH_SCREEN.jpg");
+				bgl.paintGameOver(g);
+				g.setColor(Color.white);
+				g.setFont(f);
+				g.drawString(msg, (instance.MAX_X - metr.stringWidth(msg)) / 2, instance.MAX_Y - 75);
+				alive = false;
+				instance.stopKeyListener();
+			} else {
+				bgl.paintComponent(g);
+				OC.paintComponent(g);
+				for (Segfault s : projectiles) {
+					if (s != null) {
+						s.paintComponent(g);
+					}
 				}
-			}
-			for (Boss bau5 : bosses) {
-				if (bau5 != null) {
-					bau5.paintComponent(g);
+				for (Boss bau5 : bosses) {
+					if (bau5 != null) {
+						bau5.paintComponent(g);
+					}
 				}
-			}
-			for (Bug b : bossesMinions) {
-				if (b != null) {
-					b.paintComponent(g);
+				for (Bug b : bossesMinions) {
+					if (b != null) {
+						b.paintComponent(g);
+					}
 				}
-			}
-			for (Bug b : enemies) {
-				if (b != null) {
-					b.paintComponent(g);
+				for (Bug b : enemies) {
+					if (b != null) {
+						b.paintComponent(g);
+					}
 				}
-			}
-			for (Powerup p : powerups) {
-				if (p != null) {
-					p.paintComponent(g);
+				for (Powerup p : powerups) {
+					if (p != null) {
+						p.paintComponent(g);
+					}
 				}
+				overlay.paintComponent(g);
 			}
-			overlay.paintComponent(g);
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -329,21 +348,21 @@ public class GfxRenderer extends JPanel implements Runnable , ActionListener {
 
 		while (alive) {
 
-			checkOverlays();
-			checkVictory();
-			
-			OC.move();
+			if (!startGame) {
 
-			//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
+			} else {
+				checkOverlays();
+				checkVictory();
+				OC.move();
+				//Note: Collision detectors would otherwise be in Controller.java, but it would take more loops, so I put it here to save runtime
+				Rectangle currOCBounds = OC.boundaries();
+				updateBosses();
+				updateMinions(currOCBounds);
+				updateBugs(currOCBounds);
+				updateSegfaults();
+				updatePowerups(currOCBounds);
+			}
 
-			Rectangle currOCBounds = OC.boundaries();
-			
-			updateBosses();
-			updateMinions(currOCBounds);
-			updateBugs(currOCBounds);
-			updateSegfaults();
-			updatePowerups(currOCBounds);
-			
 			repaint();
 
 			timeDiff = System.currentTimeMillis() - prevTime;
