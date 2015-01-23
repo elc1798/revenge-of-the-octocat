@@ -8,6 +8,19 @@ There will be two major components of the background. A textfield (uneditable *u
 Movement will be controlled with the arrow keys and attacking will use the z and x keys.
 
 
+###How to run:
+
+$ javac *.java
+
+Then:
+
+$ java Driver
+
+OR
+
+$ java Game
+
+
 ###Checklist:
  - [X] Basic setup (Window formating, image creation and management, etc.)
  - [X] Character basics (Positioning, sprite, etc.)
@@ -17,7 +30,6 @@ Movement will be controlled with the arrow keys and attacking will use the z and
  - [?] Storyline
  - [X] Splash Screen
  - [X] Art!
-
 
 ###Github Branches:
 
