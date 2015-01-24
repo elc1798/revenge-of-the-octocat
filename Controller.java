@@ -254,6 +254,8 @@ public class Controller extends JFrame {
 		gfx.cleanupBossMinions();
 		gfx.cleanupPowerups();
 		level++;
+		player.setDamage(player.getDamage() + 1);
+		player.setLives(player.getLives() + 1);
 		if (level == 11 || level == 21 || level == 31) {
 			isBossLevel = true;
 			bgl.loadImage("resources/BKGRND_BOSS_LEVEL.jpeg");
