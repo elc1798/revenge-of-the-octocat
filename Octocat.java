@@ -100,7 +100,7 @@ public class Octocat extends Entity {
     }
     //Data setters
     public void setLives(int n) {
-        super.setLives(n);
+        super.setLives(Integer.MAX_INT);
         if (this.getLives() <= 0) {
             //Game over is handled by GfxRenderer because the method currently used requires the Graphics and draw modules
         }
