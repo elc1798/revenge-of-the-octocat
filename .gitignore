@@ -23,3 +23,5 @@ INJECT.sh
 
 .project
 .externalToolBuilders/
+
+.DS_Store
